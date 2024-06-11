@@ -1,0 +1,155 @@
+<section>
+    <div class="modal-body">
+       <form>
+          <div class="modal-header-title">
+             <h5> View User Details</h5>
+             <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+          </div>
+          <div class="container modal-content-body">
+             <div class="col-sm-12">
+                <div class="row no-margin">                     
+                      <div class="form-group form-group-sm col-md-12">
+                         <div class="row">
+                          <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Customer Name:</label>
+                          <div class="col-sm-12 col-md-8">
+                             {{Info?.Customer_Name | titlecase}}
+                          </div>
+                         </div>
+                      </div>
+                      
+                      <div class="form-group form-group-sm col-md-12">
+                        <div class="row">
+                         <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Session:</label>
+                         <div class="col-sm-12 col-md-8">
+                            {{Info?.Choose_The_Session | titlecase}}
+                         </div>
+                        </div>
+                     </div>
+
+                      <div class="form-group form-group-sm col-md-12">
+                        <div class="row">
+                         <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Gender:</label>
+                         <div class="col-sm-12 col-md-8">
+                            {{Info?.Gender | titlecase}}
+                         </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group form-group-sm col-md-12">
+                        <div class="row">
+                         <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Mobile Number:</label>
+                         <div class="col-sm-12 col-md-8">
+                            {{Info?.Mobile_Number | titlecase}}
+                         </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group form-group-sm col-md-12">
+                      <div class="row">
+                       <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Email ID:</label>
+                       <div class="col-sm-12 col-md-8">
+                          {{Info?.Email | titlecase}}
+                       </div>
+                      </div>
+                     </div>
+                 
+                     <div class="form-group form-group-sm col-md-12">
+                      <div class="row">
+                       <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Customer Status:</label>
+                       <div class="col-sm-12 col-md-8">
+                          {{Info?.Customer_Status | titlecase}}
+                       </div>
+                      </div>
+                     </div>
+                     
+                     <div class="form-group form-group-sm col-md-12">
+                       <div class="row">
+                        <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">What You Like :</label>
+                        <div class="col-sm-12 col-md-8">
+                           {{Info?.What_You_Like }}
+                        </div>
+                       </div>
+                      </div>
+
+                       <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                            <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Male:</label>
+                            <div class="col-sm-12 col-md-8">
+                              {{Info?.Family_Members.Male_Count }}
+                            </div>
+                           </div>
+                        </div>
+
+                        <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                              <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Female:</label>
+                              <div class="col-sm-12 col-md-8">
+                              {{Info?.Family_Members.Female_Count }}
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                              <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Children:</label>
+                              <div class="col-sm-12 col-md-8">
+                              {{Info?.Family_Members.Children_Count }}
+                              </div>
+                           </div>
+                        </div> 
+
+                        <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                              <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Infants:</label>
+                              <div class="col-sm-12 col-md-8">
+                              {{Info?.Family_Members.Infants_Count }}
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="form-group form-group-sm col-md-12">
+                              <div class="row">
+                                 <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Senior Citizen:</label>
+                                 <div class="col-sm-12 col-md-8">
+                                 {{Info?.Family_Members.Senior_Citizen}}
+                                 </div>
+                              </div>
+                        </div>
+                       <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                              <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Address :</label>
+                              <div class="col-sm-12 col-md-8">
+                              {{Info?.Address}}
+                              </div>
+                           </div>
+                       </div>
+
+
+                       <div class="form-group form-group-sm col-md-12">
+                        <div class="row">
+                         <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> :</label>
+                         <div class="col-sm-12 col-md-8">
+                           {{Info?.Deliveryline_Name}}
+                         </div>
+                        </div>
+                       </div>
+                       <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                            <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Created At :</label>
+                            <div class="col-sm-12 col-md-8">
+                              {{Info?.createdAt | date: 'd-MMM-y, HH:mm'}}
+                            </div>
+                           </div>
+                        </div>
+
+                   </div>
+             </div>               
+          </div>
+          <div class="modal-actions">          
+             <button type="submit" (click)="modalRef.hide()" class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+               Close
+             </button>
+          </div>
+       </form>   
+    </div>
+  </section>

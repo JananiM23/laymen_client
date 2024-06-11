@@ -1,0 +1,85 @@
+<section *ngIf="Type && ( Type === 'View')">
+    <div class="modal-body">
+        <form>
+            <div class="modal-header-title">
+                <h5> VilFresh Credit Info</h5>
+                <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle"
+                aria-hidden="true"></i></span>
+            </div>
+            <div class="container modal-content-body">
+                <div class="col-sm-12">
+                    <div class="row no-margin">
+                      
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Customer Name :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{CreditHistoryView?.Customer?.Customer_Name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Type :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">                                   
+                                    {{CreditHistoryView?.Added_or_Reduced }}
+                                    <small> ( {{CreditHistoryView?.Added_Type }}
+                                       <ng-container *ngIf="CreditHistoryView?.PurposeOf_Reduce === 'By_Order'"> By Order</ng-container>
+                                       <ng-container *ngIf="CreditHistoryView?.PurposeOf_Reduce !== 'By_Order'"> {{CreditHistoryView?.PurposeOf_Reduce }} </ng-container> )</small>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="CreditHistoryView?.Added_Type === 'Online'">
+                         <div class="form-group form-group-sm col-md-12">
+                             <div class="row">
+                                 <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Reference Id :</label>
+                                 <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    <h6>{{CreditHistoryView?.Added_Reference_Id }}</h6>
+                                 </div>
+                             </div>
+                         </div>
+                     </ng-container>
+                     <div class="form-group form-group-sm col-md-12">
+                        <div class="row">
+                            <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Previous Amount :</label>
+                            <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                <span> Rs. </span> {{CreditHistoryView?.Previous_AvailableLimit }}
+                            </div>
+                        </div>
+                    </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Credit Amount :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    <span> Rs. </span> {{CreditHistoryView?.Credit_Limit }}
+                                </div>
+                            </div>
+                        </div>                      
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Available Amount :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    <span> Rs. </span> {{CreditHistoryView?.Available_Limit}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">  Date & Time:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{CreditHistoryView?.Date | date: 'd-MMM-y, HH:mm' }}
+                                </div>
+                            </div>
+                        </div>                                     
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" (click)="modalRef.hide()"
+                    class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+                    Close
+                </button>
+            </div>
+        </form>
+    </div>
+ </section>

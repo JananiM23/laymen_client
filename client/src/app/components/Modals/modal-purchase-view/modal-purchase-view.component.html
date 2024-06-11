@@ -1,0 +1,102 @@
+<section>
+   <div class="modal-body">
+      <form>
+            <div class="modal-header-title">
+               <h5>Purchase Order Info</h5>
+               <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+            </div>           
+            <div class="container modal-content-body">
+               <div class="col-sm-12">
+                  <div class="row no-margin">                     
+                     <div class="form-group form-group-sm col-md-12">
+                        <div class="row">
+                           <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl" style="line-height: 0;">Purchase Date :</label>
+                           <div class="col-sm-12 col-md-8"> {{Info?.createdAt | date: 'd-MMM-y' }} </div>
+                              
+                        </div>
+                     </div>
+                  </div>    
+                  <div class="row no-margin">                     
+                        <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                              <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl" style="line-height: 0;">Purchase Request Date :</label>
+                              <div class="col-sm-12 col-md-8"> {{Info?.Config_Date | date: 'd-MMM-y' }} </div>
+                           </div>
+                        </div>
+                  </div> 
+                  <div class="row no-margin">                     
+                     <div class="form-group form-group-sm col-md-12">
+                        <div class="row">
+                           <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl" style="line-height: 0;"> Total Products :</label>
+                           <div class="col-sm-12 col-md-8" > {{Info?.TotalItems }} </div>
+                        </div>
+                     </div>
+                  </div> 
+                  <!-- <div class="row no-margin">                     
+                     <div class="form-group form-group-sm col-md-12">
+                        <div class="row">
+                           <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl" style="line-height: 0;">  Product Total Quantity :</label>
+                           <div class="col-sm-12 col-md-8" > {{Info?.TotalQuantity }} <span> KG </span> </div>
+                        </div>
+                     </div>
+                  </div>  -->
+                  <div class="row no-margin">                     
+                     <div class="form-group form-group-sm col-md-12">
+                        <div class="row">
+                           <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl" style="line-height: 0;">  Purchase Amount :</label>
+                           <div class="col-sm-12 col-md-8" > <span> Rs. </span> {{Info?.TotalAmount }} </div>
+                        </div>
+                     </div>
+                  </div> 
+                  <div class="container-fluid">
+                     <div class="table-responsive">
+                        <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                           <thead #TableHeaderSection>
+                              <tr>
+                                 <th>S.No</th>
+                                 <th>
+                                    <div class="column-title"> 
+                                       Product Name                                                              
+                                    </div>
+                                 </th>
+                                 <th>
+                                    <div class="column-title"> 
+                                       Required Quantity                                                              
+                                    </div>
+                                    <div style="font-weight: 600; font-size: 10px; letter-spacing: 0.5px; opacity: 0.6; "> (basic Quantity * count = Total Quantity) </div>
+                                 </th>
+                                 <th>
+                                    <div class="column-title"> 
+                                       Unit Price                                                              
+                                    </div>
+                                 </th>
+                                 <th>
+                                    <div class="column-title"> 
+                                       Total Amount                                                              
+                                    </div>
+                                 </th>                              
+                              </tr>
+                           </thead>
+                           <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i> </div>
+                           <tbody #TableBodySection class="tbl-content">
+                              <ng-container>
+                                 <tr class="odd" *ngFor="let item of Info?.Purchase_Details; let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item?.ProductId?.Product_Name}}</td>
+                                    <td>{{ item?.ProductId?.BasicUnitQuantity}} * {{item?.Quantity}} = {{item?.Quantity * item?.ProductId?.BasicUnitQuantity}} <span> {{item?.ProductId?.Unit}}</span></td> 
+                                    <td> <span> Rs. </span> {{item?.UnitPrice}}</td>
+                                    <td> <span> Rs. </span> {{item?.TotalAmount}}</td>
+                                 </tr>
+                              </ng-container>                                              
+                           </tbody>   
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="modal-actions">          
+               <button type="submit" (click)="modalRef.hide()" class="modal-confirm btns-modal-action fill-left-to-right" aria-label=""> Close </button>
+            </div>
+      </form>   
+   </div>
+</section>

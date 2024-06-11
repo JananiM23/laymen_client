@@ -1,0 +1,293 @@
+
+<section>
+   <div class="tabpane-title green-gr-background">
+      <h5 class="section-title">Today Orders</h5>
+      <div class="generate-btn-div" >
+         <button *ngIf="CheckOrderGenerate() === 'Continue' && OrderGenerateInProgress === false " (click)="OrderGenerate()" class="generate-btn create-button-btn animated fadeInDown" > Generate Orders </button>
+         <button *ngIf="CheckOrderGenerate() === 'AssignAndContinue' && VerifiedOrder === true && OrderGenerateInProgress === false " (click)="OrderAssign(templateNew)" class="generate-btn create-button-btn animated fadeInDown" > Assign And Generate Orders </button>
+         <button [routerLink]="['/Deliveryboy-Tracking']" class="generate-btn create-button-btn animated fadeInDown" style="margin-right: 20px;" > Track Soldiers </button>
+      </div>
+   </div>
+   <div class="card box-shadow">
+      <div class="card-block">        
+         <div class="row">                        
+            <div class="col-sm-9 col-sm-9 col-md-9"> 
+               <label class="text-left side-field-title"> <b>Delivery Lines</b> </label> 
+               <div class="wrapper">
+                  <div  *ngFor="let DeliveryLine of DeliveryList;let i=index;" class="box" [ngClass]="{'active': ActiveDeliverLine?._id === DeliveryLine?._id }">
+                     <span class="generate-btn btn-delivery-lst"  (click)="ChangeDeliveryLine(i)"> {{DeliveryLine.Deliveryline_Name}} </span>
+                  </div> 
+               </div>
+            </div>  
+                                
+            <div class="col-sm-3 col-sm-3 col-md-3">
+               <label class="text-left side-field-title" > <b>Orders Spilt</b> </label>                 
+               <div class="wrapper">
+                  <div  *ngFor="let DeliveryLine of ValidAndUnValid;let i=index;" class="box" >
+                     <span class="generate-btn btn-delivery-lst"  (click)="ChangeValidORUnValid(DeliveryLine.Key)"> {{DeliveryLine.Name}} </span>
+                  </div> 
+               </div>
+            </div>  
+         </div>                  
+         <br>
+         <div class="row no-margin">
+            <div class="col-sm-3">
+               <h6 style=" margin: 0px; line-height: 35px;"> Total Orders : {{UpcomingOrderDetails.length}} </h6>
+            </div>
+            <div class="col-sm-6" style="text-align: center">
+               <span *ngIf="UnProcessableOrders > 0" style="line-height: 35px; color: #d90000;">
+                  Total Subscription orders Un-processable customers Count: <b> {{UnProcessableOrders}} </b>
+               </span>
+            </div>
+            <div class="col-sm-3">
+               <div class="btn-viewSample">
+                  <div class="tabpane-title green-gr-background" style="padding: 0px">
+                     <a class="create-button-btn animated fadeInDown" (click)="openSampleModal(template)"> Sample Orders ({{SampleDetails?.length}}) </a>
+                     <a class="create-icon-btn animated fadeInDown">                         
+                     <i class="fa fa-plus"></i>
+                     </a>
+                  </div>
+               </div>
+            </div>
+               <div class="table-responsive">
+                  <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                     <thead #TableHeaderSection>
+                           <tr>
+                              <th>S.No</th>
+                              <th *ngFor="let Header of THeaders;let i=index" [ngStyle]="{'width': Header.Key === 'Address' ? '450px' : 'Auto' }">
+                                 <div class="column-title"> {{Header.Name}} </div>
+                              </th>
+                              <th>Actions</th>
+                           </tr>
+                     </thead>
+                     <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i>
+                     </div>
+                     <tbody #TableBodySection class="tbl-content" *ngIf="UpcomingOrderDetails.length > 0" >
+                        <ng-container *ngFor="let OrderInfo of UpcomingOrderDetails;let i=index">
+                           <tr class="DefaultClass" [ngClass]="{'ExpandClass': OrderInfo?.ExpandClass}">
+                              <td>{{ i+1 }}</td>  
+                              <td>{{ OrderInfo?.Customer_Name }}</td>
+                              <td>{{ OrderInfo?.Mobile_Number }}</td>
+                              <td>{{ OrderInfo?.Address }} </td>
+                              <td>{{ OrderInfo?.Orders.length }}</td>
+                              <td> {{ OrderInfo?.ValidSubscription === true ? 'Valid' : 'Invalid' }} </td>
+                              <td>
+                                 <div class="action-icon-parent"> 
+                                    <span *ngIf="!OrderInfo?.ExpandClass" class="col-action-icon bk-clr-info" matTooltip="Expand" (click)="ExpandThis(i)"><i class="fa fa-expand" aria-hidden="true"></i></span>                                      
+                                    <span *ngIf="OrderInfo?.ExpandClass" class="col-action-icon bk-clr-info" matTooltip="Collapse" (click)="CollapseThis(i)"><i class="fa fa-compress" aria-hidden="true"></i></span>
+                                 </div>
+                              </td>
+                           </tr>
+
+                           <tr class="child-row" [ngClass]="{'ExpandClass': OrderInfo?.ExpandClass}">
+                              <td colspan="7">
+                                 <div style="padding: 0px 20px;">
+                                    <table class="tbl-child-vilFresh">
+                                       <thead>
+                                          <tr>
+                                             <th> S.No </th>
+                                             <th class="ng-star-inserted">
+                                                <div class="column-title"> Order Type <span><i  class="material-icons" ng-reflect-klass="material-icons" ng-reflect-ng-class="[object Object]">sort</i></span></div>
+                                             </th>
+                                             <th class="ng-star-inserted">
+                                                <div class="column-title"> Order Reference <span><i  class="material-icons" ng-reflect-klass="material-icons" ng-reflect-ng-class="[object Object]">sort</i></span></div>
+                                             </th>
+                                             <th class="ng-star-inserted">
+                                                <div class="column-title"> Ordered Items <span><i  class="material-icons" ng-reflect-klass="material-icons" ng-reflect-ng-class="[object Object]">sort</i></span></div>
+                                             </th>
+                                             <th class="ng-star-inserted">
+                                                <div class="column-title"> Order Cost <span><i  class="material-icons" ng-reflect-klass="material-icons" ng-reflect-ng-class="[object Object]">sort</i></span></div>
+                                             </th>
+                                             <th class="ng-star-inserted">
+                                                <div class="column-title"> Payment Type <span><i  class="material-icons" ng-reflect-klass="material-icons" ng-reflect-ng-class="[object Object]">sort</i></span></div>
+                                             </th>
+                                             <th class="ng-star-inserted">
+                                                <div class="column-title"> Ordered Date <span><i  class="material-icons" ng-reflect-klass="material-icons" ng-reflect-ng-class="[object Object]">sort</i></span></div>
+                                             </th>
+                                             <th>Actions</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody style="background: #f2f2f2;">
+                                          <ng-container *ngFor="let Order of OrderInfo?.Orders;let j=index" >
+                                             <tr [ngClass]="{'BBottom-none': !OrderInfo?.ValidSubscription && Order?.Order_Type === 'Subscription_From'}">
+                                                <td> {{j+1}} </td>
+                                                <td> {{ Order?.Order_Type === 'From_Basket' ? 'Vilfresh Basket' : Order?.Order_Type === 'From_Order' ? 'Customer Order' : Order?.Order_Type === 'Subscription_From' ? 'Customer Subscription' : '' }} </td>
+                                                <td> {{Order?.Order_Reference || '-'}} </td>
+                                                <td> {{Order?.Item_Counts}} </td>
+                                                <td> Rs.{{Order?.Payable_Amount}}  </td>
+                                                <td> {{ Order?.Payment_Type === 'Partial_WalletCredit' ? ' Wallet & Credit' : Order?.Payment_Type === 'Partial_WalletOnline' ? 'Wallet & Online' : Order?.Payment_Type }} </td>
+                                                <td> {{ (Order?.createdAt | date: 'd-MMM-y' || '-')  }} </td>
+                                                <td>
+                                                   <span class="col-action-icon bk-clr-info" matTooltip="View" (click)="ViewUpcomingOrders(i,j)"><i class="fa fa-eye" aria-hidden="true"></i></span>                                      
+                                                </td>
+                                             </tr>
+                                             <tr *ngIf="!OrderInfo?.ValidSubscription && Order?.Order_Type === 'Subscription_From'" style="border: none;">
+                                                <td colspan="8" class="AlertMsg">
+                                                   <span> Unable process this order, This customer wallet is less than this orders total amount. </span>
+                                                </td>
+                                             </tr>
+                                          </ng-container>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </td>
+                           </tr>
+                           <div class="table-down-arrow"><i class="fa fa-arrow-circle-down animated infinite fadeInDown"></i></div>
+                           </ng-container>
+                           <tr *ngIf="UpcomingOrderDetails.length === 0">
+                              <td colspan="9"> No Records Found.... </td>
+                           </tr>
+                     </tbody>
+                     <div #TableLoaderSection class="tbl-loading-center">
+                           <div id="inTurnFadingTextG">
+                              <div id="inTurnFadingTextG_1" class="inTurnFadingTextG">L</div>
+                              <div id="inTurnFadingTextG_2" class="inTurnFadingTextG">O</div>
+                              <div id="inTurnFadingTextG_3" class="inTurnFadingTextG">A</div>
+                              <div id="inTurnFadingTextG_4" class="inTurnFadingTextG">D</div>
+                              <div id="inTurnFadingTextG_5" class="inTurnFadingTextG">I</div>
+                              <div id="inTurnFadingTextG_6" class="inTurnFadingTextG">N</div>
+                              <div id="inTurnFadingTextG_7" class="inTurnFadingTextG">G</div>
+                              <div id="inTurnFadingTextG_8" class="inTurnFadingTextG">.</div>
+                              <div id="inTurnFadingTextG_9" class="inTurnFadingTextG">.</div>
+                              <div id="inTurnFadingTextG_10" class="inTurnFadingTextG">.</div>
+                           </div>
+                     </div>
+                  </table>                    
+               </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+<ng-template #template>
+   <div class="modal-body" >
+         <div class="modal-header-title">
+            <h5>Sample Requesting Customers</h5>
+            <span class="modal-container-close" (click)="modalReference.hide();"><i class="fa fa-times-circle"
+               aria-hidden="true"></i></span>
+         </div>
+         <div class="container modal-content-body">
+            <div class="col-sm-12">
+                  <div class="row">     
+                     <div class="table-responsive">
+                        <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                           <thead>
+                              <tr>
+                                 <th>S.No</th>
+                                 <th>Name</th>
+                                 <th>Mobile</th>
+                                 <th width="50%">Address</th>
+                              </tr>
+                           </thead>
+                           <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i></div>  
+                           <tbody #TableBodySection class="tbl-content">
+                              <ng-container *ngIf="SampleDetails.length > 0">
+                                 <tr class="odd" *ngFor="let Sample of SampleDetails;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{Sample?.Customer_Name}}</td>
+                                    <td>{{Sample?.Mobile_Number}}</td>
+                                    <td>{{Sample?.Address}}</td> 
+                                 </tr>
+                              </ng-container>                                              
+                           </tbody>                                          
+                        </table>
+                     </div>
+                  </div>
+            </div>
+         </div>
+   </div>
+</ng-template>
+
+
+
+
+<ng-template #templateNew>
+   <div class="modal-body" >
+      <form [formGroup]="OrderAssignFGroup">
+         <div class="modal-header-title">
+            <h5>Orders Assign</h5>
+            <span class="modal-container-close" (click)="modalReference.hide();"><i class="fa fa-times-circle"
+               aria-hidden="true"></i></span>
+         </div>
+         <div class="container modal-content-body">
+            <div class="col-sm-12" *ngIf="OrderAssignStage === 'StageOne'">
+               <div class="row"> 
+                   <div class="form-group col-sm-2"></div>
+                   <div class="form-group col-lg-8 col-md-12">
+                       <div class="row">
+                           <label class="col-md-12 col-lg-4 col-form-label text-lg-right"> Select Deliver Persons </label>
+                           <div class="col-md-12 col-lg-8">                                   
+                               <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                   <mat-select class="select-box" formControlName="DeliverPersons" placeholder="Select Deliver Persons" multiple>
+                                       <mat-option *ngFor="let Person of PresentedPersons" [value]="Person">{{Person.DeliveryPerson_Name}}  ({{Person.Deliveryline_Name}})</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                       </div>
+                   </div>                                
+               </div>               
+            </div> 
+            <div class="col-sm-12" *ngIf="OrderAssignStage === 'StageTwo'">
+               <div class="row">                        
+                  <div class="col-sm-12 col-sm-12 col-md-12"> 
+                     <label class="text-left side-field-title"> <b>Assigned Delivery Persons</b> </label> 
+                     <div class="wrapper">
+                        <div *ngFor="let Person of AssignedPersons;let i=index;" class="box" [ngClass]="{'active': AssignedActivePerson?._id === Person?._id }">
+                           <span class="generate-btn btn-delivery-lst"  (click)="ChangeAssignedActivePerson(i)"> {{Person.DeliveryPerson_Name}} ({{Person.Deliveryline_Name}}) </span>
+                        </div> 
+                     </div>
+                  </div>
+               </div>
+               <div class="row">     
+                  <div class="table-responsive">
+                     <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                           <tr>
+                              <th>S.No</th>
+                              <th>Customer Name</th>
+                              <th>Mobile</th>
+                              <th width="40%">Address</th>
+                              <th>Assigned Person</th>
+                              <th>Selection
+                                 <mat-checkbox formControlName="SelectAll" (change)="AllSelect()" ></mat-checkbox>
+                              </th>
+                           </tr>
+                        </thead>
+                        <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i></div>  
+                        <tbody #TableBodySection class="tbl-content">
+                           <ng-container formArrayName="AssignedArray" *ngFor="let Assigned of GetAssignedArray(); let i = index;">
+                              <tr class="odd" [formGroupName]="i">
+                                 <td>{{i+1}}</td>
+                                 <td>{{ Assigned.get('Customer_Name').value }}</td>
+                                 <td>{{ Assigned.get('Mobile_Number').value }}</td>
+                                 <td>{{ Assigned.get('Address').value }}</td>
+                                 <td>
+                                    {{ Assigned.get('DeliverPerson').value?.DeliveryPerson_Name }}
+                                    <span *ngIf="Assigned.get('DeliverPerson').value !== null"> ({{ Assigned.get('DeliverPerson').value?.Deliveryline_Name }}) </span>
+                                 </td>
+                                 <td>
+                                    <mat-checkbox formControlName="DeliverPersonCheck" (change)="SetActivePersonToCustomer(i)" ></mat-checkbox>
+                                 </td>
+                              </tr>
+                           </ng-container>                                              
+                        </tbody>                                          
+                     </table>
+                  </div>
+               </div>
+            </div>  
+         </div>
+         <div class="modal-actions">
+            <button *ngIf="OrderAssignStage === 'StageOne'" type="button" (click)="MoveStageTwo()" [disabled]="OrderAssignFGroup.status !== 'VALID'|| Uploading"
+                class="modal-confirm btns-modal-action fill-left-to-right"
+                [ngClass]="{'disabled': OrderAssignFGroup.status !== 'VALID'|| Uploading}">
+                <span> Proceed </span>             
+            </button>
+            <button *ngIf="OrderAssignStage === 'StageTwo'" type="button" (click)="SubmitAndAssign()" [disabled]="OrderAssignFGroup.status !== 'VALID'|| Uploading"
+                class="modal-confirm btns-modal-action fill-left-to-right" [ngClass]="{'disabled': OrderAssignFGroup.status !== 'VALID'|| Uploading}">
+                <span *ngIf="!Uploading ">Submit And Generate </span>
+                <span *ngIf="Uploading"> Loading... </span>
+            </button>
+         </div>
+      </form>
+   </div>
+</ng-template>

@@ -1,0 +1,246 @@
+<section *ngIf="Type &&  Type === 'View'">
+    <div class="modal-body">
+        <div class="modal-header-title">
+            <h5> Customer Credit History</h5>
+            <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle"
+                    aria-hidden="true"></i></span>
+        </div>
+        <br>
+        <div class="row" style="margin-right:120px ">
+            <div class="col-md-12">
+                <div class="row" style="margin-left: -130px;">
+                    <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Customer Name :</label>
+                    <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                        {{CustomerDetails?.Customer_Name }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+               <div class="row" style="margin-left: -130px;">
+                   <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Delivery Line :</label>
+                   <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                       {{CustomerDetails?.Delivery_Line?.Deliveryline_Name }}
+                   </div>
+               </div>
+           </div>
+         </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-2">
+                    <div class="table-entries-and-sortby">
+                        <label>Limits
+                            <mat-form-field class="full-width tbl-limits" [floatLabel]="'never'" appearance="fill">
+                                <mat-select [(ngModel)]="LimitCount" (ngModelChange)="Pagination_Action(1)">
+                                    <mat-option [value]="5">5</mat-option>
+                                    <mat-option [value]="10">10</mat-option>
+                                    <mat-option [value]="25">25</mat-option>
+                                    <mat-option [value]="50">50</mat-option>
+                                    <mat-option [value]="100">100</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row no-margin">
+                <div class="table-responsive">
+                    <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                        <thead #TableHeaderSection>
+                            <tr>
+                                <th>S.No</th>
+                                <th *ngFor="let Header of THeaders;let i=index">
+                                    <div class="column-title"> {{Header.Name}}
+                                        <!-- <span>
+                                            <i class="material-icons" (click)="Short_Change(i)"
+                                                [ngClass]="{'active': Header.If_Short, 'rotateZ-A': Header.Condition === 'Descending' }">sort</i>
+                                        </span> -->
+                                    </div>
+                                </th>
+                                <!-- <th>Actions</th> -->
+                            </tr>
+                        </thead>
+                        <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i>
+                        </div>
+                        <tbody #TableBodySection class="tbl-content">
+                            <ng-container *ngIf="CustomerCreditHistory.length > 0">
+                                <tr class="odd" *ngFor="let CreditHistory of CustomerCreditHistory;let J=index">
+                                    <td>{{SerialNoAddOn+J+1}}</td>
+                                    <td>{{CreditHistory?.Added_or_Reduced}}
+                                        <br style="margin: 0px">
+                                        <small> (
+                                          <ng-container *ngIf="CreditHistory?.Added_Type === 'Order_UnDeliver'"> By Order Un-Deliver</ng-container>
+                                          <ng-container *ngIf="CreditHistory?.Added_Type !== 'Order_UnDeliver'"> {{CreditHistory?.Added_Type }} </ng-container>
+                                          <ng-container *ngIf="CreditHistory?.PurposeOf_Reduce === 'By_Order'"> By Order</ng-container>
+                                          <ng-container *ngIf="CreditHistory?.PurposeOf_Reduce !== 'By_Order'"> {{CreditHistory?.PurposeOf_Reduce }} </ng-container>
+                                          )
+                                        </small>
+                                    </td>
+                                    <td> <span>Rs. </span> {{CreditHistory?.Credit_Limit}}</td>                        
+                                    <td> <span>Rs. </span> {{ CreditHistory?.Available_Limit  - (CreditHistory.Previous_AvailableLimit !== undefined ? CreditHistory?.Previous_AvailableLimit : 0)}}</td>
+                                    <td> <span>Rs. </span> {{CreditHistory?.Available_Limit}}</td>
+                                    <td>{{CreditHistory?.Date | date: 'd-MMM-y HH:mm'}} </td>
+                                    <!-- <td>
+                                        <div class="action-icon-parent">
+                                            <span class="col-action-icon bk-clr-info" matTooltip="View"
+                                                (click)="ViewCreditHistory(J)"><i class="fa fa-eye"
+                                                    aria-hidden="true"></i></span>
+                                        </div>
+                                    </td> -->
+                                </tr>
+                                <div class="table-down-arrow"><i
+                                        class="fa fa-arrow-circle-down animated infinite fadeInDown"></i></div>
+                            </ng-container>
+                            <tr *ngIf="CustomerCreditHistory.length === 0">
+                                <td colspan="5"> No Records Found.... </td>
+                            </tr>
+                        </tbody>
+                        <div #TableLoaderSection class="tbl-loading-center">
+                            <div id="inTurnFadingTextG">
+                                <div id="inTurnFadingTextG_1" class="inTurnFadingTextG">L</div>
+                                <div id="inTurnFadingTextG_2" class="inTurnFadingTextG">O</div>
+                                <div id="inTurnFadingTextG_3" class="inTurnFadingTextG">A</div>
+                                <div id="inTurnFadingTextG_4" class="inTurnFadingTextG">D</div>
+                                <div id="inTurnFadingTextG_5" class="inTurnFadingTextG">I</div>
+                                <div id="inTurnFadingTextG_6" class="inTurnFadingTextG">N</div>
+                                <div id="inTurnFadingTextG_7" class="inTurnFadingTextG">G</div>
+                                <div id="inTurnFadingTextG_8" class="inTurnFadingTextG">.</div>
+                                <div id="inTurnFadingTextG_9" class="inTurnFadingTextG">.</div>
+                                <div id="inTurnFadingTextG_10" class="inTurnFadingTextG">.</div>
+                            </div>
+                        </div>
+                    </table>
+                </div>
+            </div>
+            <div class="pagination-wrapper margin-top-10">
+                <div class="table-go-page-entries">
+                    <label>Go page
+                        <mat-form-field class="width-auto" style="padding: 0px 10px 0px 6px;">
+                            <input matInput type="number" autocomplete="off" class="input-go-entries" min="1"
+                                max="{{PagesArray.length}}" [(ngModel)]="GoToPage">
+                        </mat-form-field>
+                        <span class="go-search-entries  green-rgb-background" matTooltip="Go to Page"
+                            (click)="Pagination_Action(GoToPage)">GO</span>
+                    </label>
+                </div>
+                <div class="page-show-entires">
+                    <div class="txt-show-records" [innerHTML]="ShowingText"></div>
+                </div>
+                <div class="page-number">
+                    <ul class="pagination hidden-xs">
+                        <li>
+                            <a class="{{PagePrevious['Class']}}" (click)="Pagination_Action(PagePrevious['Value'])"
+                                matTooltip="Previous">
+                                <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                            </a>
+                        </li>
+                        <li *ngFor="let Page of PagesArray; let i=index" class="{{Page.Class}}"
+                            [ngClass]="{'active': Page.Active}" (click)="Pagination_Action(Page.Value)">
+                            <a>
+                                <p>{{Page.Text}}</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{PageNext['Class']}}" (click)="Pagination_Action(PageNext['Value'])"
+                                matTooltip="Next">
+                                <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="pagination visible-xs">
+                        <li><a>
+                                <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                            </a></li>
+                        <li><a>
+                                <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                            </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button type="submit" (click)="modalRef.hide()" class="modal-confirm btns-modal-action fill-left-to-right"
+                aria-label="">
+                Close
+            </button>
+        </div>
+    </div>
+</section>
+
+<section *ngIf="Type &&  Type === 'Create'">
+    <div class="modal-body">
+        <form [formGroup]="CreditForm" (ngSubmit)="onSubmit()">
+            <div class="modal-header-title green-gr-background">
+                <h5> Add Credit Amount </h5>
+                <span *ngIf="!Uploading " class="modal-container-close" (click)="modalRef.hide();">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i></span>
+            </div>
+            <div class="container modal-content-body">
+                <div class="col-sm-12">
+                    <div class="row ">
+                        <div class="form-group form-group-sm col-lg-6 col-md-12">
+                            <div class="row" style="margin-left: -10px;">
+                                <label class="col-sm-12 col-md-6 col-form-label text-lg-right lbl">Assigned Credit
+                                    :</label>
+                                <div class="col-sm-12 col-md-4 col-form-label  lbl">
+                                    {{CustomerDetails.VilfreshCredit_Limit}}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-lg-6 col-md-12 " *ngIf="CustomerDetails?.AvailableCredit_Limit > 0">
+                            <div class="row" style="margin-left: -130px;">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Available Credit
+                                    :</label>
+                                <div class="col-sm-12 col-md-4 col-form-label  lbl">
+                                    {{CustomerDetails?.AvailableCredit_Limit }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-group" style="margin-right: 204px;">
+                        <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required"> Credit Limit Settings </label>
+                        <div class="col-lg-7 col-md-12">
+                            <div class="YesOrNoButton" btnRadioGroup (ngModelChange)="AddedOrReduced()" formControlName="CreditType">
+                                <label class="hbtn hb-fill-right" btnRadio="Added" tabindex="0" role="button"> Add
+                                </label>
+                                <ng-container *ngIf="CustomerDetails?.AvailableCredit_Limit > 0">
+                                    <label class="hbtn hb-fill-left" btnRadio="Reduced" tabindex="0" role="button"> Reduce </label>
+                                </ng-container>
+                                <ng-container *ngIf="CustomerDetails?.AvailableCredit_Limit === 0 || CustomerDetails?.AvailableCredit_Limit === '0'">
+                                    <label class="hbtn hb-fill-left TabSelectDisabled" btnRadio="Reduced" tabindex="0" role="button"> Reduced </label>
+                                </ng-container> 
+                            </div>
+                            <mat-error [innerHTML]="GetFormControlErrorMessage('CreditType')"></mat-error>
+                        </div>
+                    </div>
+
+                    <div class="row" >
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label *ngIf="CreditForm.controls['CreditType'].value === 'Added'" class="col-md-12 col-lg-4 col-form-label text-lg-right "> Add Credit Amount </label>
+                                <label *ngIf="CreditForm.controls['CreditType'].value === 'Reduced'" class="col-md-12 col-lg-4 col-form-label text-lg-right ">Reduced Credit Amount </label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input matInput formControlName="Credit_Amount" placeholder="Amount Rs."
+                                            autocomplete="off" (ngModelChange)="changeCount($event)">
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Credit_Amount')"> </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+               <button type="submit" [disabled]="CreditForm.status !== 'VALID'|| Uploading"
+                   class="modal-confirm btns-modal-action fill-left-to-right" [ngClass]="{'disabled': CreditForm.status !== 'VALID'|| Uploading}">
+                   <span *ngIf="Type === 'Create' && !Uploading">Submit</span>
+                   <span *ngIf="Uploading"> Loading... </span>
+               </button>
+           </div>
+        </form>
+    </div>
+</section>

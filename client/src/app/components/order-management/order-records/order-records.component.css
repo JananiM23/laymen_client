@@ -1,0 +1,47 @@
+.DefaultClass.ExpandClass {
+    border-bottom: 0px;
+    background-color: #8cba47;
+}
+.mat-toggle.active {
+  background: green;
+  color: #fff !important;
+  font-weight: 600;
+  border-color: #fff;
+}
+
+.mat-toggle :hover {
+  background: green;
+  color: #fff !important;
+  font-weight: 600;
+  border-color: #fff;
+}
+
+
+table.tbl-child-vilFresh {
+   box-shadow: 1px 1px 14px #7e7e7e;
+   margin: 10px 0px;
+   width: 100%;
+}
+.tbl-child-vilFresh th {
+  border: 0px !important;
+  background: lightgray !important;
+  color: #000 !important;
+  text-transform: capitalize !important;
+}
+
+.tbl-child-vilFresh tr th span i.material-icons {
+  display: none;
+}
+
+tr.child-row {
+   display: none;
+   transition: all .5s ease-in-out;
+   transform: scale(0, 0);
+   border: 1px solid rgba(100, 149, 48, 0.47);
+   border-bottom-width: 0 !important;
+   background-color: #ddebcc;
+}
+tr.child-row.ExpandClass {
+   display: table-row;
+   transform: scale(1, 1);
+}

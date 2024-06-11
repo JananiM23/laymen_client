@@ -1,0 +1,133 @@
+<section *ngIf="Type && Type === 'Edit'">
+   <div class="modal-body">
+       <form [formGroup]="CustomerSupportForm" (ngSubmit)="onSubmit()">
+           <div class="modal-header-title">
+               <h5> {{Type}} Support Details Info</h5>
+               <span *ngIf="!Uploading " class="modal-container-close" (click)="modalRef.hide();"><i
+                       class="fa fa-times-circle" aria-hidden="true"></i></span>
+           </div>
+           <div class="container modal-content-body">
+               <div class="col-sm-12">
+                   <div class="row">
+                       <div class="col-md-12 col-lg-12 chatBox">
+                           <ng-container *ngFor="let support of SupportDetails; let i=index;">
+                              <div class="chat " [ngClass]="{'rightAlign': support.Message_by === 'User'}">
+                                 <div class="align">
+                                    <p *ngIf="support.Message_by !== 'User'"  class="by">
+                                       {{CustomerSupportDetails?.Customer?.Customer_Name}}
+                                       <span *ngIf="support.Message_by !== 'User'" class="date"> {{support.Date | date: 'd-MMM-y, HH:mm'}} </span>
+                                    </p>
+                                    <p *ngIf="support.Message_by === 'User'" class="by"> You
+                                       <span class="date"> {{support.Date | date: 'd-MMM-y, HH:mm'}} </span>
+                                    </p>
+                                    <p class="msg"> {{support.Message}} </p>
+                                 </div>
+                              </div>
+                           </ng-container>
+                       </div>
+                   </div>
+
+                   <br>
+                   <div class="form-group col-lg-12 col-md-12">
+                       <div class="row">
+                           <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Support Message</label>
+                           <div class="col-md-12 col-lg-8">
+                               <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                   <textarea matInput formControlName="Message" placeholder="Support Message"></textarea>
+                                   <mat-error class="mat-error-full margin-top0"
+                                            [innerHTML]="GetFormControlErrorMessage('Message')"> </mat-error>
+                               </mat-form-field>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="modal-actions">
+            <button type="submit" [disabled]="CustomerSupportForm.status !== 'VALID' || Uploading"
+                class="modal-confirm btns-modal-action fill-left-to-right" [ngClass]="{'disabled': CustomerSupportForm.status !== 'VALID' || Uploading}">
+                <span *ngIf="Type === 'Edit' && !Uploading">Submit</span>
+            </button>
+        </div>
+         
+       </form>
+   </div>
+</section>
+
+
+<section *ngIf="Type && ( Type === 'View')">
+   <div class="modal-body">
+       <form>
+           <div class="modal-header-title">
+               <h5> Customer Support Details</h5>
+               <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle"
+                       aria-hidden="true"></i></span>
+           </div>
+           <div class="container modal-content-body">
+               <div class="col-sm-12">
+                   <div class="row no-margin">
+                       <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                               <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Customer
+                                   Name:</label>
+                               <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                   {{CustomerSupportDetails?.Customer.Customer_Name }}
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                               <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Support Title
+                                   :</label>
+                               <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                   {{CustomerSupportDetails?.Support_Title | titlecase}}
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                               <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Support_key
+                                   :</label>
+                               <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                   {{CustomerSupportDetails?.Support_key }}
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="form-group form-group-sm col-md-12 chatBox">
+                           <ng-container *ngFor="let support of CustomerSupportDetails.Support_Details; let i=index;">
+                              <div class="chat " [ngClass]="{'rightAlign': support.Message_by === 'User'}">
+                                 <div class="align">
+                                    <p *ngIf="support.Message_by !== 'User'"  class="by">
+                                       {{CustomerSupportDetails?.Customer?.Customer_Name}}
+                                       <span *ngIf="support.Message_by !== 'User'" class="date"> {{support.Date | date: 'd-MMM-y, HH:mm'}} </span>
+                                    </p>
+                                    <p *ngIf="support.Message_by === 'User'" class="by"> You
+                                       <span class="date"> {{support.Date | date: 'd-MMM-y, HH:mm'}} </span>
+                                    </p>
+                                    <p class="msg"> {{support.Message}} </p>
+                                 </div>
+                              </div>
+                           </ng-container>
+                       </div>
+
+
+                       <div class="form-group form-group-sm col-md-12">
+                           <div class="row">
+                               <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Created Date:</label>
+                               <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                   {{CustomerSupportDetails?.createdAt | date: 'd-MMM-y, HH:mm' }}
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="modal-actions">
+               <button type="submit" (click)="modalRef.hide()"
+                   class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+                   Close
+               </button>
+           </div>
+       </form>
+   </div>
+</section>

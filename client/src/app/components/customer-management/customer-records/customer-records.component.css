@@ -1,0 +1,32 @@
+.Cancel {
+    color: red;
+}
+.Approve {
+    color: green;
+}
+.Pending {
+    color: blue;
+}
+
+.Delivered {
+    color: salmon;
+}
+.Sample-OnDelivery {
+    color: blue;
+}
+.Hold {
+    color: tomato;
+}
+
+.Subscription-waiting {
+    color: brown;
+}
+.Subscription {
+    color: chartreuse;
+}
+.Subscription-Deactive {
+    color: chocolate;
+}
+
+
+

@@ -1,0 +1,32 @@
+<div class="limiter">
+	<div class="container-login">
+		<div class="login-box">
+			<div class="logo">
+				<img src="assets/images/vilfresh.png">
+			 </div>
+			 <form [formGroup]="LoginForm" class="form-horizontal">
+				 <div class="form-group">
+					 <input class="us-name" type="text" formControlName="User_Name" placeholder="Username">
+					 <span class="us-icon"><i class="fa fa-user"></i></span>
+					 <div>
+						<!-- <ng-container>
+							<i class="fa fa-exclamation-triangle" style="padding: 4px 7px;"></i>
+							<span>This Username is Required</span>
+						</ng-container> -->
+					 </div>
+				 </div>                    
+				 <div class="form-group">
+					 <input class="us-password" type="password" formControlName="User_Password" placeholder="Password">
+					 <span class="us-icon"><i class="fa fa-lock"></i></span>
+					 <div>
+						<!-- <ng-container>
+							<i class="fa fa-exclamation-triangle" style="padding: 4px 7px;"></i>
+							<span>This Password is Required</span>
+						</ng-container> -->
+					 </div>
+				 </div>
+				 <button (click)="Login()" class="btn-login" type="button">Login</button>
+			 </form>			 
+		</div>
+	</div>
+</div>

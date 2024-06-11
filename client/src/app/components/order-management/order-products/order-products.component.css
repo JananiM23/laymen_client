@@ -1,0 +1,69 @@
+.DefaultClass.ExpandClass {
+   border-bottom: 0px;
+   background-color: #8cba47;
+}
+.mat-toggle.active {
+ background: green;
+ color: #fff !important;
+ font-weight: 600;
+ border-color: #fff;
+}
+
+.mat-toggle :hover {
+ background: green;
+ color: #fff !important;
+ font-weight: 600;
+ border-color: #fff;
+}
+
+
+table.tbl-child-vilFresh {
+  box-shadow: 1px 1px 14px #7e7e7e;
+  margin: 10px 0px;
+  width: 100%;
+}
+.tbl-child-vilFresh th {
+ border: 0px !important;
+ background: lightgray !important;
+ color: #000 !important;
+ text-transform: capitalize !important;
+}
+
+.tbl-child-vilFresh tr th span i.material-icons {
+ display: none;
+}
+
+tr.child-row {
+  display: none;
+  transition: all .5s ease-in-out;
+  transform: scale(0, 0);
+  border: 1px solid rgba(100, 149, 48, 0.47);
+  border-bottom-width: 0 !important;
+  background-color: #ddebcc;
+}
+tr.child-row.ExpandClass {
+  display: table-row;
+  transform: scale(1, 1);
+}
+
+.SwitchSection {
+   display: inline-flex;
+}
+.SwitchSection span {
+   font-weight: 500;
+   padding: 3px 10px;
+   font-size: 15px;
+   position: relative;
+   cursor: pointer;
+   letter-spacing: 0.6px;
+   color: rgba(44, 95, 49, 1.0);
+   transition: all .5s;
+   border: 1px solid;
+   margin-right: 10px;
+   border-radius: 20px;
+   background: #FFFFFF;
+}
+.SwitchSection span:hover, .SwitchSection span.active{
+   color: rgb(255 255 255);
+   background: linear-gradient(to top,rgba(44,95,49,1),rgba(140,189,62,1));
+}

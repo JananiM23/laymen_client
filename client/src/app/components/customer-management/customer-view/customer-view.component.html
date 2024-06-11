@@ -1,0 +1,272 @@
+<section>
+   <div class="tabpane-title green-gr-background">
+      <h5>Customer Basic Details</h5>
+   </div>
+  <div class="card box-shadow">
+     <div class="col-md-12 tab-pane-container no-padding">
+        <div class="tab-pane-container">
+              <div class="portlet-tab-panelbody">
+                 <div class="row">
+                    <div class="col-md-12"> 
+                       <!-- Hospital List View Details -->
+                       <div class="hospital-listview-details">
+                         <div *ngIf="CustomerDetails !== undefined" class="container-fluid">
+                             <div class="row">
+                                   <div class="form-group col-lg-7 col-md-12 div-overflow-auto">
+                               <table class="tbl-hospital-list-view">
+                                   <tbody>
+                                       <tr>
+                                         <th>Customer Name</th>
+                                         <td>:</td>
+                                         <td>{{CustomerDetails?.Customer_Name}}</td>
+                                       </tr>
+                                       <tr>
+                                         <th>Mobile Number</th>
+                                         <td>:</td>
+                                         <td>{{CustomerDetails?.Mobile_Number}}</td>
+                                       </tr>
+                                       <tr>
+                                         <th>Email </th>
+                                         <td>:</td>
+                                         <td>{{CustomerDetails?.Email}}</td>
+                                       </tr>
+                                       <tr>
+                                         <th>Gender</th>
+                                         <td>:</td>
+                                         <td>{{CustomerDetails?.Gender}} </td>
+                                       </tr>
+                                       <tr>
+                                         <th>Address</th>
+                                         <td>:</td>
+                                         <td>{{CustomerDetails?.Address}}</td>
+                                       </tr>
+                                       <tr>
+                                          <th>Pincode</th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Pincode}}</td>
+                                        </tr>
+                                       <tr>
+                                          <th>Ethnicity</th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.City}}</td>
+                                        </tr> 
+                                        
+                                       <tr>
+                                          <th>Customer Status</th>
+                                          <td>:</td> 
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'Registration_completed'">{{CustomerDetails?.Customer_Status === 'Registration_completed' ? 'WaitingFor Approval' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'Sample_Pending'">{{CustomerDetails?.Customer_Status === 'Sample_Pending' ? 'Sample Pending' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'Sample_Rejected'">{{CustomerDetails?.Customer_Status === 'Sample_Rejected' ? 'Sample Rejected' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'Sample_OnHold'">{{CustomerDetails?.Customer_Status === ' Sample_OnHold' ? 'Sample OnHold' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'Sample_OnHold'">{{CustomerDetails?.Customer_Status === ' Sample_OnHold' ? 'Sample OnHold' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'Approved'">{{CustomerDetails?.Customer_Status === 'Approved' ? 'Activated' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'Sample_OnDelivery'">{{CustomerDetails?.Customer_Status === 'Sample_OnDelivery' ? 'Sample OnDelivery' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'Sample_Delivery_Canceled'">{{CustomerDetails?.Customer_Status === 'Sample_Delivery_Canceled' ? 'Sample Delivery Canceled' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'WaitingFor_Subscription'">{{CustomerDetails?.Customer_Status === 'WaitingFor_Subscription' ? 'WaitingFor Subscription' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'Subscription_Activated'">{{CustomerDetails?.Customer_Status === 'Subscription_Activated' ? 'Customer Activated' : ''}}</td>
+                                          <td *ngIf="CustomerDetails?.Customer_Status === 'InActivated'">{{CustomerDetails?.Customer_Status === 'InActivated' ? 'InActivated' : ''}}</td> 
+                                       </tr> 
+                                       
+                                        <tr>
+                                          <th>Delivery Line </th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Delivery_Line?.Deliveryline_Name}}</td>
+                                        </tr>
+                                        <tr>
+                                          <th> Register From</th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Register_From}}</td>
+                                        </tr> 
+                                        <tr>
+                                          <th  class="tabl-header"> 
+                                          <h6> <b> Family Members Details</b></h6> 
+                                          </th>
+                                        </tr>
+                                        <tr>
+                                          <th>Male Count</th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Family_Members.Male_Count}}</td>
+                                        </tr> 
+                                        <tr>
+                                          <th>Female Count</th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Family_Members.Female_Count}}</td>
+                                        </tr> 
+                                        <tr>
+                                          <th>Children Count</th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Family_Members.Children_Count}}</td>
+                                        </tr> 
+                                        <tr>
+                                          <th>Infants Count</th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Family_Members.Infants_Count}}</td>
+                                        </tr> 
+                                        <tr>
+                                          <th>Senior Citizen Count</th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Family_Members.Senior_Citizen}}</td>
+                                        </tr>
+                                        <tr>
+                                           <th>What You Like</th>
+                                           <td>:</td>
+                                           <td >{{CustomerDetails?.What_You_Like}}</td>
+                                       </tr> 
+                                        <tr>
+                                          <th class="tabl-header"> 
+                                          <h6> <b> Special Date Details</b></h6> 
+                                          </th>
+                                        </tr>
+
+                                        <ng-container class="row" *ngFor="let Special of CustomerDetails?.Special_Date" >
+                                          <tr>
+                                              <th>Special Day</th>
+                                              <td>:</td>
+                                              <td>{{Special?.Name}}</td>
+                                          </tr>
+                                          <tr>
+                                              <th>Special Date</th>
+                                              <td>:</td>
+                                              <td>{{Special?.Special_Date | date: 'd-MMM-y'}}</td>
+                                          </tr>
+                                        </ng-container>
+
+                                        <tr>
+                                          <th class="tabl-header"> 
+                                           <h6> <b>Sample Request Details</b> </h6> 
+                                        </th></tr>
+                                        <tr>
+                                          <th>Sample</th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Request_Sample_Order === true ? 'Yes' : 'No'}}</td>
+                                         </tr>
+                                         <tr *ngIf="CustomerDetails?.Request_Sample_Order === true">
+                                         <th>Sample Session</th>
+                                         <td>:</td>
+                                         <td>{{CustomerDetails?.Choose_The_Session}}</td>
+                                        </tr> 
+                                        <tr *ngIf="CustomerDetails?.Request_Sample_Order === true">
+                                         <th>Sample Date</th>
+                                         <td>:</td>
+                                         <td>{{CustomerDetails?.Choose_The_Sample_Date | date: 'd-MMM-y'}}</td>
+                                        </tr>    
+                                       <tr>
+                                          <th class="tabl-header">
+                                          <h6> <b>Morning Subscription Milk</b> </h6>  
+                                        </th>
+                                      </tr>
+                                        <tr>
+                                          <th>Morning Subscription </th>
+                                          <td>:</td>
+                                          <td>{{CustomerDetails?.Morning_Subscription}}</td>
+                                          </tr>
+                                          <ng-container *ngIf="CustomerDetails?.Morning_Subscription === 'Yes'">
+                                          <ng-container class="row" *ngFor="let Morning of CustomerDetails?.Morning" >
+                                                   <tr>
+                                                   <th>Morning Subscription Milk Type</th>
+                                                   <td>:</td>
+                                                   <td>{{Morning?.ProductId.Type}}</td>
+                                                   </tr>
+                                                   <tr>
+                                                   <th>Morning Liter</th>
+                                                   <td>:</td>
+                                                   <td>{{Morning?.Liter}} <span>Litre</span></td>
+                                                   </tr>
+                                                   <!-- <tr>
+                                                   <th>Morning Milk Price</th>
+                                                   <td>:</td>
+                                                   <td><span>Rs.{{Morning?.Price}}</span>  </td>
+                                                   </tr> -->
+                                          </ng-container>
+                                          </ng-container>
+                                        <tr>
+                                            <th class="tabl-header">
+                                           <h6> <b>Evening Subscription Milk</b> </h6>
+                                            </th>
+                                          </tr>
+                                          <tr>
+                                            <th>Evening Subscription </th>
+                                            <td>:</td>
+                                            <td>{{CustomerDetails?.Evening_Subscription}}</td>
+                                          </tr>
+                                          <ng-container *ngIf="CustomerDetails?.Evening_Subscription === 'Yes'">
+                                             <ng-container *ngFor="let Evening of CustomerDetails?.Evening" >
+                                                <tr>
+                                                <th>Evening Subscription Milk Type</th>
+                                                <td>:</td>
+                                                <td>{{Evening?.ProductId.Type}}</td>
+                                                </tr>
+                                                <tr>
+                                                <th>Evening Liter</th>
+                                                <td>:</td>
+                                                <td>{{Evening?.Liter}} <span>L</span></td>
+                                                </tr>
+                                                <!-- <tr>
+                                                <th>Evening Milk Price</th>
+                                                <td>:</td>
+                                                <td> <span>Rs.{{Evening?.Price}}</span> </td>
+                                                </tr> -->
+                                             </ng-container>
+                                          </ng-container>
+                                      <tr>
+                                        <th class="tabl-header"> 
+                                        <h6> <b> Customer QA Details</b></h6> 
+                                        </th>
+                                      </tr>
+                                      <ng-container *ngFor="let QA of CustomerDetails?.QA_Analytics;let i=index">
+                                        <tr>
+                                          <th>({{i+1}}) {{QA?.Question}} ?</th>
+                                          <td>:</td>
+                                          <td>{{QA?.Answer}}</td>
+                                        </tr>                                       
+                                      </ng-container>
+                                      <tr>
+                                        <th> Updated By </th>
+                                        <td>:</td>
+                                        <td>{{ CustomerDetails?.Delivery_Person_QA?.DeliveryPerson_Name }}</td>
+                                      </tr>
+                                      <ng-container *ngIf="CustomerDetails.Customer_Status === 'InActivated'">
+                                       <tr>
+                                          <th class="tabl-header"> 
+                                          <h6> <b style="color: red;"> Customer Deactivated</b></h6> 
+                                          </th>
+                                        </tr>
+                                        <tr>
+                                          <th style="color: red;"> Reason Of Deactivation </th>
+                                          <td>:</td>
+                                          <td style="color: red;">{{ CustomerDetails?.ReasonOfDeactivation }}</td>
+                                        </tr>
+                                      </ng-container>
+                                   </tbody>
+                               </table>
+                             </div>
+                             <div class="form-group  col-lg-5 col-md-12 ">
+                               <div class="">
+                                <h5 class="available-cash"> Vilfresh Money : 
+                                    <span class="cash"> Rs.</span> <span class="cash"> {{CustomerDetails?.VilfreshMoney_Limit - (CustomerDetails?.VilfreshCredit_Limit - CustomerDetails?.AvailableCredit_Limit )}} </span>
+                                </h5>
+                               </div>
+                                 <div class="map-canvas">
+                                   <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [mapTypeControl]="true" [fullscreenControl]="true" [fitBounds]="true" >
+                                      <agm-marker [latitude]="latitude" [longitude]="longitude" [agmFitBounds]="true"></agm-marker>
+                                   </agm-map>
+                                 </div>
+                             </div>
+                           </div>
+                         </div> 
+                     
+                       </div>
+                       <!-- Go Back button -->
+                       <div class="row">
+                           <div class="col-sm-12">
+                              <a [routerLink]="['/customer-management/customer-records']" class="btn btn-outline-primary float-right save">Go Back</a>
+                           </div>
+                        </div>
+                   </div>
+               </div>
+             </div>
+         </div>
+     </div>
+  </div>
+</section>
+ 

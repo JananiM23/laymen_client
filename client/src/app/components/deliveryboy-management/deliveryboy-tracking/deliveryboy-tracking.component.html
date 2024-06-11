@@ -1,0 +1,207 @@
+<section>
+        <div class="tabpane-title">
+           <h5>Tracking Soldier</h5>
+        </div>
+        <div class="card box-shadow">
+           <div class="col-md-12 tab-pane-container no-padding">
+                 <div class="portlet-tab-panelbody">
+                    <form class="form-horizontal" >
+                        <!-- Customer Details -->
+                        <div class="hospital-details">                        
+                             <div class="container-fluid">
+                                <label class="text-left side-field-title"> <b>Active Soldiers</b> </label>
+                                <div class="row">
+                                  <div class="form-group col-md-12 col-lg-4 box" *ngIf="ListShow === true">
+                                    <!-- <mat-checkbox (click)="AllTrack($event)">All Soldiers</mat-checkbox> -->
+                                    <a class="create-button-btn animated fadeInDown btn-soldiers" (click)="AllTrack($event)">All Soldiers</a>
+    
+                                    <ul class="list-group soldier-list li" > 
+                                        <li class="list-group-item" *ngFor="let DeliveryBoy of DeliveryBoyList;let i=index" > 
+                                            <div class="DeliveryBoyData">
+                                                <span class="line">{{i + 1 }}. {{DeliveryBoy?.DeliveryPerson_Name}}</span>
+                                                <span (click)="Track(i)" class="markerView"> <i class="fa fa-map-marker" aria-hidden="true"></i> </span>
+                                                <span (click)="LoadDeliverReport(i, deliveryPrint)" class="pdfView"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> </span>
+                                            </div>
+                                        </li> 
+                                    </ul>
+                                  </div>  
+                                  <div class="form-group col-md-12 col-lg-8">                            
+                                    <div class="map-canvas">
+                                        <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [mapTypeControl]="true" [fullscreenControl]="true" [fitBounds]="true">
+                                    <ng-container *ngIf="deliveryboyShow === true">
+                                            <ng-container *ngFor="let Marker of MarkersData; let i=index">
+                                                    <agm-marker 
+                                                        [markerClickable]="true"
+                                                        (markerClick)="OpenInfoWindow(i)" 
+                                                        [latitude]="Marker.Latitude" 
+                                                        [longitude]="Marker.Longitude" 
+                                                        [agmFitBounds]="true"
+                                                        [iconUrl]="Marker.Icon"
+                                                        [markerDraggable]="false" 
+                                                        [agmFitBounds]="true">    <!-- (dragEnd)="markerDragEvent($event)"  -->
+                                                        <agm-info-window (infoWindowClose)="CloseInfoWindow(i)" [disableAutoPan]="false" >
+                                                                <div class="custom-info-window">
+                                                                <p class="HosName">
+                                                                    <span> {{Marker.Data.DeliveryPerson_Name}} </span>
+                                                                </p>
+                                                                </div>
+                                                        </agm-info-window>
+                                                    </agm-marker>
+                                            </ng-container>
+                                    </ng-container>                                
+                                    <ng-container *ngIf="orderShow === true"> 
+                                        <ng-container>
+                                            <agm-marker  
+                                                [markerClickable]="true" 
+                                                [iconUrl]="Icon"
+                                                [latitude]="latitude" 
+                                                [longitude]="longitude" 
+                                                [markerDraggable]="false" 
+                                                [agmFitBounds]="true">    <!--(markerClick)="OpenInfoWindow(i)"  (dragEnd)="markerDragEvent($event)"  -->
+                                                <agm-info-window [disableAutoPan]="false" > <!-- (infoWindowClose)="CloseInfoWindow(i)" -->
+                                                        <div class="custom-info-window">
+                                                            <p class="HosName">
+                                                                <span> {{Data}} </span>
+                                                                <span class="InfoFullScreen">
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                </agm-info-window>
+                                            </agm-marker>
+                                        </ng-container>                                   
+                                        <ng-container *ngFor="let Marker of Order_Markers;let i=index">
+                                                <agm-marker  
+                                                    [markerClickable]="true"
+                                                    [iconUrl]="Marker.Icon"
+                                                    (markerClick)="OpenInfoWindow(i)" 
+                                                    [latitude]="Marker.Latitude" 
+                                                    [longitude]="Marker.Longitude" 
+                                                    [markerDraggable]="false" 
+                                                    [agmFitBounds]="true">    <!-- (dragEnd)="markerDragEvent($event)"  -->
+                                                    <agm-info-window (infoWindowClose)="CloseInfoWindow(i)" [disableAutoPan]="false" >
+                                                            <div class="custom-info-window">
+                                                                <p class="HosName">
+                                                                    <span> Customer Name:  </span>  <span class="font-color: black; font-size: 9px;"> {{Marker.Data.Customer_Name}}</span> <br>
+                                                                    <span> Mobile Number: </span> <span class="font-color: black; font-size: 9px;"> {{Marker.Data.Mobile_Number}} </span> <br>
+                                                                    <span> Address: </span> <span class="font-color: black; font-size: 9px;"> {{Marker.Data.Address}} </span>
+                                                                </p>
+                                                            </div>
+                                                    </agm-info-window>
+                                                </agm-marker>
+                                        </ng-container> 
+                                    </ng-container> 
+                                    <!-- <ng-container *ngIf="orderShow === 'true'">
+                                      
+                                    </ng-container> -->
+                                        </agm-map>
+                                    </div>  
+                                </div>
+                            </div>
+                        </div> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<ng-template #deliveryPrint>
+   <div class="Close-Btn" (click)="modalReference.hide()">
+      <span>X</span>
+   </div>
+   <div *ngIf="!deliveryReportLoading" id="ModalDom">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-sm-9">
+               <h5 class="order-title">Delivery Orders Report</h5>
+            </div>
+            <div class="col-sm-3" style="text-align: right;">
+               <span *ngIf="DownloadBtn" (click)="DownloadPdf()" class="pdf-download">
+                  Download <i class="fa fa-download" aria-hidden="true"></i>
+               </span>
+            </div>
+         </div>
+         <hr style="margin: 0;">
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="Key-Value">
+                  <p class="Key"> Deliver Person </p>
+                  <p class="dot"> : </p>
+                  <p class="Value"> {{deliveryPersonDetails?.DeliveryPersonName}}</p>
+               </div>
+            </div>
+            <div class="col-sm-12">
+               <div class="Key-Value">
+                  <p class="Key"> Mobile Number </p>
+                  <p class="dot"> : </p>
+                  <p class="Value"> {{deliveryPersonDetails?.Mobile_Number}} </p>
+               </div>
+            </div>
+            <div class="col-sm-12">
+               <div class="Key-Value">
+                  <p class="Key"> Primary Deliver Line </p>
+                  <p class="dot"> : </p>
+                  <p class="Value"> {{deliveryPersonDetails?.DeliveryLine?.Deliveryline_Name}} </p>
+               </div>
+            </div>
+            <div class="col-sm-12">
+               <div class="Key-Value">
+                  <p class="Key"> Sub Deliver Line </p>
+                  <p class="dot"> : </p>
+                  <p class="Value"> {{deliveryPersonDetails?.SubLines}} </p>
+               </div>
+            </div>
+            <!-- <div class="col-sm-12">
+               <div class="Key-Value">
+                  <p class="Key"> No.Of Orders : </p>
+                  <p class="Value"> {{deliveryPersonDetails.CustomersLength}} </p>
+               </div>
+            </div> -->
+         </div>
+
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="Order_report">
+                  <table>
+                     <thead>
+                        <th width="5%"> S.No</th>
+                        <th width="20%"> Name </th>
+                        <th width="30%"> Address </th>
+                        <th width="15%"> Mobile </th>
+                        <th width="30%"> Orders </th>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let report of deliveryReport; let i=index">
+                           <td>
+                              <p> {{i+1}} </p>
+                           </td>
+                           <td>
+                              <p> {{report?.Customer_Name}} </p>
+                           </td>
+                           <td>
+                              <p> {{report?.Address}} </p>
+                           </td>
+                           <td>
+                              <p> {{report?.Mobile_Number}} </p>
+                           </td>
+                           <td>
+                              <ng-container *ngFor="let item of report?.Items_Details; let j=index">
+                                 <p>
+                                    <span> {{j+1}}) </span>
+                                    <span> {{ item?.Product_Name}} </span>
+                                    <span>
+                                       {{ item?.Quantity}}
+                                       <small>({{ item?.Unit}}) </small>
+                                    </span>
+                                 </p>
+                              </ng-container>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</ng-template>

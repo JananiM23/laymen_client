@@ -1,0 +1,197 @@
+<section *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+      <div class="modal-body">
+         <form [formGroup]="CustomerForm" (ngSubmit)="onSubmit()">
+         <div class="modal-header-title">
+            <h5> {{Type}} Customer Info</h5>
+            <span *ngIf="!Uploading" class="modal-container-close" (click)="modalRef.hide();"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+         </div>
+         <div class="container modal-content-body">
+            <div class="col-sm-12">
+               <div class="row">    
+                  <div class="form-group col-lg-6 col-md-12">
+                     <div class="row">
+                        <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Customer Name</label>
+                        <div class="col-md-12 col-lg-8">
+                           <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                              <input matInput formControlName="Customer_Name" placeholder="Customer Name">
+                           </mat-form-field>
+                        </div>
+                     </div>                           
+                  </div>
+                  <div class="form-group col-lg-6 col-md-12">
+                     <div class="row">
+                        <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Mobile Number</label>
+                        <div class="col-md-12 col-lg-8">
+                           <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                              <input matInput formControlName="Mobile_Number" placeholder="Mobile Number">
+                           </mat-form-field>
+                        </div>
+                     </div>                          
+                  </div>
+                  <div class="form-group col-lg-6 col-md-12">
+                        <div class="row">
+                           <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Gender </label>
+                           <div class="col-md-12 col-lg-8">
+                              <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                  <input matInput formControlName="Gender" placeholder="Gender">
+                              </mat-form-field>
+                           </div>
+                        </div>                          
+                     </div>
+                  <div class="form-group col-lg-6 col-md-12">
+                     <div class="row">
+                        <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Email ID</label>
+                        <div class="col-md-12 col-lg-8">
+                           <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                              <input matInput formControlName="Email" placeholder="Email ID">
+                           </mat-form-field>
+                        </div>
+                     </div>                          
+                  </div>
+                  <ng-container formGroupName="Family_Members" >
+                  <div class="form-group col-lg-6 col-md-12">
+                      <div class="row">
+                         <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Male Count</label>
+                         <div class="col-md-12 col-lg-8">
+                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                               <input matInput formControlName="Male_Count" placeholder="Male Count">
+                            </mat-form-field>
+                         </div>
+                      </div>                          
+                   </div>
+                   <div class="form-group col-lg-6 col-md-12">
+                      <div class="row">
+                         <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Female Count</label>
+                         <div class="col-md-12 col-lg-8">
+                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                               <input matInput formControlName="Female_Count" placeholder="Female Count">
+                            </mat-form-field>
+                         </div>
+                      </div>                          
+                   </div>
+
+                   <div class="form-group col-lg-6 col-md-12">
+                      <div class="row">
+                         <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Children Count</label>
+                         <div class="col-md-12 col-lg-8">
+                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                               <input matInput formControlName="Children_Count" placeholder="Children Count ">
+                            </mat-form-field>
+                         </div>
+                      </div>                          
+                   </div>
+
+                   <div class="form-group col-lg-6 col-md-12">
+                      <div class="row">
+                         <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Infants Count</label>
+                         <div class="col-md-12 col-lg-8">
+                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                               <input matInput formControlName="Infants_Count" placeholder="Infants Count  ">
+                            </mat-form-field>
+                         </div>
+                      </div>                          
+                   </div>
+
+                   <div class="form-group col-lg-6 col-md-12">
+                      <div class="row">
+                         <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Senior Citizen</label>
+                         <div class="col-md-12 col-lg-8">
+                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                               <input matInput formControlName="Senior_Citizen" placeholder="Senior Citizen ">
+                            </mat-form-field>
+                         </div>
+                      </div>                          
+                   </div> 
+                  </ng-container>
+
+                   <div class="form-group col-lg-6 col-md-12">
+                      <div class="row">
+                         <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">What You Like</label>
+                         <div class="col-md-12 col-lg-8">
+                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                               <input matInput formControlName="What_You_Like" placeholder="What You Like ">
+                            </mat-form-field>
+                         </div>
+                      </div>                          
+                   </div>  
+                   <div class="form-group col-lg-6 col-md-12">
+                      <div class="row">
+                         <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Choose The Session</label>
+                         <div class="col-md-12 col-lg-8">
+                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                               <input matInput formControlName="Choose_The_Session" placeholder="Choose The Session ">
+                            </mat-form-field>
+                         </div>
+                      </div>                          
+                   </div>
+                   <div class="form-group col-lg-6 col-md-12">
+                         <div class="row">
+                            <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Address</label>
+                            <div class="col-md-12 col-lg-8">
+                               <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                  <textarea formControlName="Address" matInput placeholder="Address"></textarea>
+                               </mat-form-field>
+                            </div>
+                         </div>                          
+                   </div>
+
+                   <div class="form-group col-lg-6 col-md-12">
+                     <div class="row">
+                        <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Delivery Line</label>
+                        <div class="col-md-12 col-lg-8">
+                           <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                              <mat-select formControlName="Delivery_Line" placeholder="Select Delivery Line" (selectionChange)="DeliveryLine($event.value)">
+                                 <mat-option>Select Delivery Line</mat-option> 
+                                 <mat-option *ngFor="let Type of DeliveryList; let i=index" [value]="Type._id"> {{Type.Deliveryline_Name}} </mat-option>
+                              </mat-select>
+                           </mat-form-field>
+                        </div>
+                     </div>                          
+                  </div>
+               </div>
+            </div>   
+           
+            <!-- <div class="row">
+                  <div class="col-md-12">
+                     <div class="col-sm-6">
+                        <label> Special Day</label>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="col-md-12 col-lg-8">
+                           <span class="btn-add-plus" (click)="AddArrayControl()"><i class="fa fa-plus"></i></span>
+                        </div>
+                     </div>
+                  </div>
+               </div>  
+                  <div class="form-group col-lg-6 col-md-12">
+                     <div class="row">
+                        <label class="col-md-12 col-lg-4 col-form-label text-lg-right">Name</label>
+                        <div class="col-md-12 col-lg-8">
+                           <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                              <input matInput formControlName="Special_Day" placeholder="Special Day">
+                           </mat-form-field>
+                        </div>
+                     </div>                          
+                  </div>
+                  <div class="form-group col-lg-6 col-sm-12">
+                     <div class="row">
+                     <label class="col-md-12 col-lg-4 col-form-label text-lg-right">Date:</label>
+                     <div class="col-sm-12 col-lg-8">
+                        <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                           <input formControlName="Special_Date" (click)="Special_Date.open()" matInput [matDatepicker]="Special_Date" (keypress)="NotAllow()" (keydown)="ClearInput($event)" placeholder="Special Date">
+                           <mat-icon (click)="Date.open()" matSuffix >event</mat-icon>
+                           <mat-datepicker touchUi #Special_Date></mat-datepicker>
+                           </mat-form-field>
+                  </div> -->
+
+         </div>
+         <div class="modal-actions">
+            <button type="submit" [disabled]="CustomerForm.status !== 'VALID'|| Uploading" class="modal-confirm btns-modal-action fill-left-to-right" [ngClass]="{'disabled': CustomerForm.status !== 'VALID'|| Uploading}">
+               <span *ngIf="Type === 'Create' && !Uploading">Submit</span>
+               <span *ngIf="Type === 'Edit' && !Uploading">Update</span>
+               <span *ngIf="Uploading"> Loading... </span>
+            </button>
+         </div>
+         </form>
+      </div>
+   </section>

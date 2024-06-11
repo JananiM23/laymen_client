@@ -1,0 +1,413 @@
+mat-toolbar {
+   position: fixed;
+   top: 0;
+   right: 0;
+   left: 0;
+   z-index: 1030;
+}
+
+.navbar {
+   display: -ms-flexbox;
+   display: flex;
+   -ms-flex-wrap: wrap;
+   flex-wrap: wrap;
+   -ms-flex-align: center;
+   align-items: center;
+   -ms-flex-pack: justify;
+   justify-content: space-between;
+   padding: 5px;
+}
+
+/*
+headeer top
+*/
+
+.topbar {
+   background-color: #6395380d;
+   padding: 0;
+   margin: 0;
+   line-height: 1;
+   width: 100%;
+   background: linear-gradient(to left, rgb(140, 186, 70), rgb(157, 198, 96)) !important;
+}
+
+.topbar .container .row {
+ margin:-7px;
+ padding:0;
+}
+
+.topbar .container .row .col-md-12 { 
+ padding:0;
+}
+
+.topbar p{
+ margin:0;
+ display:inline-block;
+ font-size: 13px;
+ color: #f1f6ff;
+}
+
+.topbar p > i{
+ margin-right:5px;
+}
+.topbar p:last-child{
+ text-align:right;
+} 
+
+header .navbar {
+   margin-bottom: 0;
+}
+
+.topbar li.topbar {
+   display: inline;
+   padding-right: 18px;
+   line-height: 52px;
+   transition: all .3s linear;
+}
+
+.topbar li.topbar:hover {
+   color: #1bbde8;
+}
+
+.topbar ul.info i {
+   color: #131313;
+   font-style: normal;
+   margin-right: 8px;
+   display: inline-block;
+   position: relative;
+   top: 4px;
+}
+
+.topbar ul.info li {
+   float: right;
+   padding-left: 30px;
+   color: #ffffff;
+   font-size: 13px;
+   line-height: 44px;
+}
+
+.topbar ul.info i span {
+   color: #aaa;
+   font-size: 13px;
+   font-weight: 400;
+   line-height: 50px;
+   padding-left: 18px;
+}
+
+ul.social-network {
+ border:none;
+ margin:0;
+ padding:0;
+}
+
+ul.social-network li {
+ border:none;  
+ margin:0;
+}
+
+ul.social-network li i {
+ margin:0;
+ font-size: 17px;
+}
+
+ul.social-network li {
+   border: 0px solid #2D2D2D;
+   display: inline-block;
+   text-align: center;
+   height: 30px;
+   vertical-align: top;
+   color: #000;
+   /* width: 35px; */
+   height: 20px;
+   border: none;
+   border-radius: 0;
+   text-align: center;
+   line-height: 30px;
+   margin-right: 3px;
+   padding: 0 10px 30px 10px;
+}
+
+.txt-user-name {padding-left: 7px;}
+
+ul.social-network {
+ list-style: none;
+ /* margin: 5px 0 0px -25px; */
+ float: right;
+}
+ul.social-network li:nth-last-child(2) a:hover {
+   color: #fff !important;
+}
+
+.waves-effect {
+   position: relative;
+   cursor: pointer;
+   display: inline-block;
+   overflow: hidden;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   -webkit-tap-highlight-color: transparent;
+   /* vertical-align: middle; */
+   z-index: 1;
+   will-change: opacity, transform;
+   transition: .3s ease-out;
+   color: #fff !important;
+}
+
+.social-network a:hover {
+   text-decoration: none;
+   color: #056937 !important;
+}
+
+a {
+ text-decoration: none;
+}
+
+li {
+   list-style-type: none;
+}
+.bg-image-full {
+   background-position: center center;
+   background-repeat: no-repeat;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   background-size: cover;
+   -o-background-size: cover;
+}
+.bg-dark {
+   background-color: #222!important;
+}
+
+.mx-background-top-linear {
+   background: -webkit-linear-gradient(45deg, #54d400 48%, #1b1e21 48%);
+   background: -webkit-linear-gradient(left, #54d400 48%, #1b1e21 48%);
+   background: linear-gradient(45deg, #54d400 48%, #1b1e21 48%);
+}
+
+
+#cssmenu,
+#cssmenu ul,
+#cssmenu li,
+#cssmenu a {
+ border: none;
+ line-height: 1;
+ margin: 0;
+ padding: 0;
+}
+#cssmenu {
+ display: block;
+ background: #d4e4bc42;
+ width: auto;
+ border-color: #080808;
+ margin: 0;
+ padding: 0;
+ width: 100%;
+ margin-left: 83px;
+}
+#cssmenu > ul {
+ list-style: inside none;
+ margin: 0;
+ padding: 0;
+}
+#cssmenu > ul > li {
+ list-style: inside none;
+ float: left;
+ display: inline-block;
+ position: relative;
+ margin: 0;
+ padding: 0;
+}
+#cssmenu.align-center > ul {
+ text-align: center;
+}
+#cssmenu.align-center > ul > li {
+ float: none;
+ margin-left: -3px;
+}
+#cssmenu.align-center ul ul {
+ text-align: left;
+}
+#cssmenu.align-center > ul > li:first-child > a {
+ border-radius: 0;
+}
+#cssmenu > ul > li > a {
+ outline: none;
+ display: block;
+ position: relative;
+ text-align: center;
+ text-decoration: none;
+ /* text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4); */
+ font-weight: 500;
+ font-size: 15px;
+ /* border-right: 1px solid #080808; */
+ color: rgba(44, 95, 49, 1.0);
+ padding: 12px 12px;
+ padding-right: 28px;
+}
+/* #cssmenu > ul > li:first-child > a {
+ border-radius: 5px 0 0 5px;
+} */
+
+#cssmenu > ul > li.active a {
+   color: #fff;
+}
+#cssmenu > ul > li.active {
+   background: linear-gradient(to top, rgba(44, 95, 49, 1.0), rgba(140, 189, 62, 1.0)) !important;
+}
+.second-sub-menu li.active {
+   background: #88ba40;
+}
+#cssmenu > ul > li > a:after {
+ content: "";
+ /* position: absolute; */
+ /* border-right: 1px solid; */
+ /* top: -1px; */
+ /* bottom: -1px; */
+ /* right: -2px; */
+ /* z-index: 99; */
+ /* border-color: #3c3c3c; */
+}
+#cssmenu ul li.has-sub:hover > a:after {
+ top: 0;
+ bottom: 0;
+}
+#cssmenu > ul > li.has-sub > a:before {
+ content: "";
+ position: absolute;
+ top: 16px;
+ right: 8px;
+ border: 5px solid transparent;
+ border-top: 5px solid #ffffff;
+}
+
+#cssmenu .second-sub-menu li.has-sub > a:before {
+   content: "";
+   position: absolute;
+   top: 16px;
+   right: 2px;
+   border: 5px solid transparent;
+   border-left: 5px solid #ffffff;
+}
+
+/* #cssmenu > ul > li.has-sub:hover > a:before {
+ top: 19px;
+} */
+#cssmenu > ul > li.has-sub:hover > a {
+ /* padding-bottom: 14px; */
+ z-index: 999;
+ border-color: #3f3f3f;
+}
+#cssmenu ul li.has-sub:hover > ul,
+#cssmenu ul li.has-sub:hover > div {
+ display: block;
+}
+#cssmenu > ul > li.has-sub > a:hover,
+#cssmenu > ul > li.has-sub:hover > a {
+ /* background: #3f3f3f;
+ border-color: #3f3f3f; */
+ background: linear-gradient(to top, rgba(44, 95, 49, 1.0), rgba(140, 189, 62, 1.0)) !important;
+ color: #fff;
+}
+#cssmenu ul li > ul,
+#cssmenu ul li > div {
+ display: none;
+ width: auto;
+ position: absolute;
+ top: 39px;
+ background: #528536;
+ /* border-radius: 0 0 5px 5px; */
+ z-index: 999;
+ /* padding: 10px 0; */
+}
+#cssmenu ul li > ul {
+ width: 200px;
+}
+#cssmenu ul ul ul {
+ position: absolute;
+}
+#cssmenu ul ul li:hover > ul {
+ left: 100%;
+ top: -10px;
+ border-radius: 5px;
+}
+#cssmenu ul li > ul li {
+ display: block;
+ list-style: inside none;
+ position: relative;
+ margin: 0;
+ padding: 0;
+}
+#cssmenu ul li > ul li a {
+ outline: none;
+ display: block;
+ position: relative;
+ font-size: 14px;
+ color: #ffffff;
+ text-decoration: none;
+ text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+ margin: 0;
+ padding: 12px 20px;
+ border-top: 1px solid #73a53c;
+}
+#cssmenu ul ul > li:hover > a,
+#cssmenu ul ul li a:hover {
+ background: #8abc408c;
+ width: 100%;
+}
+#cssmenu > ul > li > a:hover {
+ color: #ffffff;
+ background: linear-gradient(to top, rgba(44, 95, 49, 1.0), rgba(140, 189, 62, 1.0)) !important;
+}
+#cssmenu ul ul a:hover {
+ color: #ffffff;
+}
+#cssmenu > ul > li.has-sub > a:hover:before {
+ border-top: 5px solid #ffffff;
+}
+
+
+div#cssmenu:after {
+   clear: both;
+   display: table;
+   content: "";
+}
+
+span.notification--num {
+   position: relative;
+   top: -6px;
+   left: -4px;
+   font-size: 11px;
+   border-radius: 50%;
+   padding: 0 3px;
+   background-color: #ff250d;
+   border: 1px solid #ff250d;
+   color: #FFFFFF;
+   text-align: center;
+   animation: notification 2.2s linear;
+}
+
+
+
+
+.mbl-toggle-btn { display: none;}
+
+@media only screen and (max-width: 980px) and (min-width: 320px)  {
+   #cssmenu {display: none;}
+   .mbl-toggle-btn { display: block;}
+   .mbl-toggle-btn { text-align: right; background: #9dc660; padding: 4px 20px;}
+   .brand-logo img{ width: 64px !important;}
+   #cssmenu > ul > li{ width: 100%; padding-right: 15px;}
+   #cssmenu > ul > li > a{ text-align: left;}
+   .web-menu.mbl-menu-open {display: block !important;}
+   .web-menu.mbl-menu-close {display: none !important;}
+}
+
+
+
+@media only screen and (max-width: 500px) and (min-width: 320px)
+{
+   ul.social-network li:first-child,ul.social-network li:nth-child(2){
+      display: none;
+   }
+}

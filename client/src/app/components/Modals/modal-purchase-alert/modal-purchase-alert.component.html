@@ -1,0 +1,166 @@
+
+<div class="modal-body"> 
+        <div class="modal-header-title">
+           <h5> {{Type}} </h5>
+           <span class="modal-container-close" (click)="ModalRef.hide();"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+        </div>   
+        <div class="" >
+           <!-- <div class="modal-icon-circle">
+              <i class="fa fa-info-circle clr-{{ColorCode}}"></i>
+           </div> -->
+           <!-- <h6 class="modal-sub-info">
+              {{TextOne}} <span class="clr-{{ColorCode}} animated fadeInDown infinite">{{TextTwo}} </span> {{TextThree}}</h6>         -->
+            <ng-container>
+                <ul class="list-group"> 
+                    <li class="list-group-item">                            
+                        <h6> Deduct from Wallet </h6> 
+                        <span> No.of Customers ({{WalletCustomers.length}})</span>  <br>
+                        <span (click)="WalletCustomer(WalletCustom)" style="color: red; margin-left: 170px; cursor: pointer;"> View Details</span>
+                    </li>  
+                    <li class="list-group-item">                                
+                        <h6> Deduct from Wallet + Credit </h6> 
+                        <span>No.of Customers ({{CreditCustomers.length}})</span> <br>
+                        <span style="color: red; margin-left: 170px; cursor: pointer;" (click)="CreditCustomer(CreditCustom)" > View Details</span>  
+                    </li>   
+                    <li class="list-group-item">   
+                        <h6> Insufficient Balance  </h6>                             
+                        <span> No.of Customers ({{NoLimitCustomers.length}})</span> <br>
+                        <span style="color: red; margin-left: 170px; cursor: pointer;" (click)="NoLimitCustomer(NoLimitCustom)"> View Details</span> <br>
+                        <p>
+                           <span ><i class="fa fa-info-circle clr-danger w3-large" style="margin-right:10px"></i> </span> 
+                           <span style="color: grey;"> By Default the order of Insufficient Balance Customers will be Cancelled.</span> <br>
+                           <!-- <span> Adjust Credit limit for Approval</span>  -->
+                        </p>
+                    </li>                    
+                </ul>
+            </ng-container>   
+            <ng-template #WalletCustom>              
+                <div class="modal-header-title">
+                    <h5> Wallet Detect List</h5>                       
+                    <span class="modal-container-close" (click)="modalReference.hide();"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                </div>   
+                <div class="col-sm-12">  
+                    <table class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>
+                                    <div class="column-title">
+                                        Customer Name
+                                    </div>
+                                </th> 
+                                <th>
+                                    <div class="column-title">
+                                        Vilfresh Money Limit
+                                    </div>
+                                </th> 
+                                <th>
+                                    <div class="column-title">
+                                        Total Utilize Amount
+                                    </div>
+                                </th>                                 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="WalletCustomers.length > 0">
+                                <tr class="odd" *ngFor="let WalletCustomers of WalletCustomers; let i=index">
+                                    <td> {{i+1}}</td>
+                                    <td> {{WalletCustomers?.Customer_Name}} </td>
+                                    <td> <span> Rs. </span> {{WalletCustomers?.VilfreshMoney_Limit}} </td>
+                                    <td> <span> Rs. </span> {{WalletCustomers?.TotalUtilize}}</td>                                    
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table> 
+                </div>              
+            </ng-template>
+            
+            <ng-template #CreditCustom>              
+                <div class="modal-header-title">
+                    <h5> Credit Detect List</h5>                       
+                    <span class="modal-container-close" (click)="modalReference.hide();"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                </div>   
+                <div class="col-sm-12">  
+                    <table class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>
+                                    <div class="column-title">
+                                        Customer Name
+                                    </div>
+                                </th> 
+                                <th>
+                                    <div class="column-title">
+                                        Vilfresh Money Limit
+                                    </div>
+                                </th>
+                                 
+                                <th>
+                                    <div class="column-title">
+                                        Available Credit Limit
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="column-title">
+                                        Total Utilize Amount
+                                    </div>
+                                </th>                                 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="CreditCustomers.length > 0">
+                                <tr class="odd" *ngFor="let CreditCustomers of CreditCustomers let i=index">
+                                    <td> {{i+1}}</td>
+                                    <td> {{CreditCustomers?.Customer_Name}} </td>
+                                    <td> <span> Rs. </span> {{CreditCustomers?.VilfreshMoney_Limit}} </td>
+                                    <td> <span> Rs. </span> {{CreditCustomers?.AvailableCredit_Limit}} </td>                                    
+                                    <td> <span> Rs. </span> {{CreditCustomers?.TotalUtilize}}</td>                                    
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table> 
+                </div>              
+            </ng-template>
+
+            <ng-template #NoLimitCustom>              
+                    <div class="modal-header-title">
+                        <h5> Insufficient Detect List</h5>                       
+                        <span class="modal-container-close" (click)="modalReference.hide();"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                    </div>   
+                    <div class="col-sm-12">  
+                        <table class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>
+                                        <div class="column-title">
+                                            Customer Name
+                                        </div>
+                                    </th>                                
+                                    <th>
+                                        <div class="column-title">
+                                            Total Utilize Amount
+                                        </div>
+                                    </th>                                 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="NoLimitCustomers.length > 0">
+                                    <tr class="odd" *ngFor="let NoLimitCustomers of NoLimitCustomers let i=index">
+                                        <td> {{i+1}}</td>
+                                        <td> {{NoLimitCustomers?.Customer_Name}} </td>
+                                        <td> <span> Rs. </span> {{NoLimitCustomers?.TotalUtilize}}</td>                                    
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table> 
+                    </div>              
+            </ng-template>
+        </div>
+        <div class="modal-actions">
+           <button type="button" class="modal-cancel btns-modal-action fill-right-to-left pull-left" (click)="Cancel();">Cancel</button>
+           <button type="button" class="modal-confirm btns-modal-action fill-left-to-right" (click)="Proceed();">Proceed</button>
+        </div>       
+</div>
+   

@@ -1,0 +1,197 @@
+<section>
+   <div class="tabpane-title green-gr-background">
+      <h5 class="section-title">Customer Referrals Management</h5>
+  </div>
+    <div class="card box-shadow">
+        <div class="card-block">
+            <div class="row">
+                <div class="col-sm-12 col-md-2">
+                    <div class="table-entries-and-sortby">
+                        <label>Limits
+                            <mat-form-field class="full-width tbl-limits" [floatLabel]="'never'" appearance="fill">
+                                <mat-select [(ngModel)]="LimitCount" (ngModelChange)="Pagination_Action(1)">
+                                    <mat-option [value]="5">5</mat-option>
+                                    <mat-option [value]="10">10</mat-option>
+                                    <mat-option [value]="25">25</mat-option>
+                                    <mat-option [value]="50">50</mat-option>
+                                    <mat-option [value]="100">100</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-sm-12 col-md-10">
+                    <div class="filter-parent">
+                        <ng-container *ngFor="let Filter of FiltersArray; let i=index">
+                            <div *ngIf="Filter.Active" class="filter-result">
+                                <div class="filter-info">
+                                    <span class="label"> {{Filter.DisplayName}} </span>
+                                    <span *ngIf="Filter.Type === 'Object' && Filter.Key === 'Customer'" class="value"> {{ Filter.Value.Customer_Name }} </span>
+                                </div>
+                                <span class="Filter-close">
+                                    <i class="fa fa-close" (click)="RemoveFilter(i)"></i>
+                                </span>
+                            </div>
+                        </ng-container>
+                        <div class="filter-icon" (click)="openFilterModal(template)"><span><i class="fa fa-filter" aria-hidden="true"></i></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-margin">
+                <div class="table-responsive">
+                    <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                        <thead #TableHeaderSection>
+                            <tr>
+                                <th>S.No</th>
+                                <th *ngFor="let Header of THeaders;let i=index">
+                                    <div class="column-title"> {{Header.Name}}
+                                        <span>
+                                            <i class="material-icons" (click)="Short_Change(i)"
+                                                [ngClass]="{'active': Header.If_Short, 'rotateZ-A': Header.Condition === 'Descending' }">sort</i>
+                                        </span>
+                                        <ng-container *ngIf="Header.Key === 'NewReferrals'">
+                                          <div style="font-weight: 600; font-size: 10px; letter-spacing: 0.5px; opacity: 0.6; "> (Last 7 Days) </div>
+                                        </ng-container>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i>
+                        </div>
+                        <tbody #TableBodySection class="tbl-content">
+                            <ng-container *ngIf="CustomerReferralsDetails.length > 0">
+                                <tr class="odd" *ngFor="let Customer of CustomerReferralsDetails;let i=index">
+                                    <td>{{SerialNoAddOn+i+1}}</td>
+                                    <td>{{Customer?.Customer_Name}}</td>
+                                    <td>{{Customer?.Mobile_Number}}</td>
+                                    <td>{{Customer?.TotalReferrals}}</td>
+                                    <td>{{Customer?.NewReferrals}} </td>
+                                    <td>{{Customer?.PendingReferrals}} </td>                                    
+                                    <td>{{Customer?.SuccessReferrals}} </td>                                    
+                                    <td>
+                                       <div class="action-icon-parent">
+                                          <span class="col-action-icon bk-clr-info" matTooltip="View" (click)="ViewCustomer_Referrals(i)"><i class="fa fa-eye" aria-hidden="true"></i></span>
+                                       </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <tr *ngIf="CustomerReferralsDetails.length === 0">
+                                <td colspan="9"> No Records Found.... </td>
+                            </tr>
+                        </tbody>
+
+                        <div #TableLoaderSection class="tbl-loading-center">
+                            <div id="inTurnFadingTextG">
+                                <div id="inTurnFadingTextG_1" class="inTurnFadingTextG">L</div>
+                                <div id="inTurnFadingTextG_2" class="inTurnFadingTextG">O</div>
+                                <div id="inTurnFadingTextG_3" class="inTurnFadingTextG">A</div>
+                                <div id="inTurnFadingTextG_4" class="inTurnFadingTextG">D</div>
+                                <div id="inTurnFadingTextG_5" class="inTurnFadingTextG">I</div>
+                                <div id="inTurnFadingTextG_6" class="inTurnFadingTextG">N</div>
+                                <div id="inTurnFadingTextG_7" class="inTurnFadingTextG">G</div>
+                                <div id="inTurnFadingTextG_8" class="inTurnFadingTextG">.</div>
+                                <div id="inTurnFadingTextG_9" class="inTurnFadingTextG">.</div>
+                                <div id="inTurnFadingTextG_10" class="inTurnFadingTextG">.</div>
+                            </div>
+                        </div>
+                    </table>
+                </div>
+            </div>
+            <div class="pagination-wrapper margin-top-10">
+                <div class="table-go-page-entries">
+                    <label>Go page
+                        <mat-form-field class="width-auto" style="padding: 0px 10px 0px 6px;">
+                            <input matInput type="number" autocomplete="off" class="input-go-entries" min="1"
+                                max="{{PagesArray.length}}" [(ngModel)]="GoToPage">
+                        </mat-form-field>
+                        <span class="go-search-entries  green-rgb-background" matTooltip="Go to Page"
+                            (click)="Pagination_Action(GoToPage)">GO</span>
+                    </label>
+                </div>
+                <div class="page-show-entires">
+                    <div class="txt-show-records" [innerHTML]="ShowingText"></div>
+                </div>
+                <div class="page-number">
+                    <ul class="pagination hidden-xs">
+                        <li>
+                            <a class="{{PagePrevious['Class']}}" (click)="Pagination_Action(PagePrevious['Value'])"
+                                matTooltip="Previous">
+                                <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                            </a>
+                        </li>
+                        <li *ngFor="let Page of PagesArray; let i=index" class="{{Page.Class}}"
+                            [ngClass]="{'active': Page.Active}" (click)="Pagination_Action(Page.Value)">
+                            <a>
+                                <p>{{Page.Text}}</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{PageNext['Class']}}" (click)="Pagination_Action(PageNext['Value'])"
+                                matTooltip="Next">
+                                <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="pagination visible-xs">
+                        <li><a>
+                                <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                            </a></li>
+                        <li><a>
+                                <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                            </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<ng-template #template>
+    <div class="modal-body">
+        <div class="modal-header-title">
+            <h5>Customer Feedback Filters</h5>
+            <span class="modal-container-close" (click)="modalReference.hide();"><i class="fa fa-times-circle"
+                    aria-hidden="true"></i></span>
+        </div>
+        <div class="container modal-content-body">
+            <form [formGroup]="FilterFGroup">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="form-group col-lg-8 col-md-12">
+                           <div class="row">
+                              <label class="col-sm-12 col-md-4 col-form-label text-lg-right">Customer</label>
+                              <div class="col-sm-12 col-md-8">
+                                 <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                    <input matInput formControlName="Customer" [matAutocomplete]="CustomerAutocomplete" placeholder="Customer" (blur)="AutocompleteBlur('Customer')">                                 
+                                    <mat-autocomplete #CustomerAutocomplete="matAutocomplete" [displayWith]="CustomerDisplayName">
+                                       <mat-option *ngFor="let Customer of filteredCustomersList | async" [value]="Customer"> {{Customer.Customer_Name}} </mat-option>
+                                    </mat-autocomplete>
+                                    <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Customer')"> </mat-error>
+                                 </mat-form-field>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right">Mobile</label>
+                                <div class="col-sm-12 col-md-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input matInput formControlName="Mobile_Number" placeholder="Mobile Number">
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Mobile_Number')"> </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>                  -->
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-actions">
+            <button *ngIf="FilterFGroupStatus" type="button" (click)="ResetFilters()"
+                class="modal-confirm btns-modal-action fill-right-to-left" aria-label="">Reset</button>
+            <button type="button" [disabled]="!FilterFGroupStatus" [ngClass]="{'disabled': !FilterFGroupStatus}"
+                (click)="SubmitFilters()" class="modal-confirm btns-modal-action fill-left-to-right"
+                aria-label="">Search</button>
+        </div>
+    </div>
+</ng-template>

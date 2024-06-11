@@ -1,0 +1,78 @@
+<section>
+   <div class="card box-shadow">
+      <div class="card-block"> 
+         <form [formGroup]="FilterFGroup">
+            <div class="tabpane-title green-gr-background">
+               <h5 class="section-title"> Vilfresh Basket
+						<span class="text-date-time">( {{ AssignDate | date: 'd/MMM/y'}} )</span>
+						<span (click)="DatePicker.open()" matTooltip="Change Date">
+							<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer; padding: 0px 10px; font-size: 19px;"></i>
+						</span>
+						<input formControlName="dateControl" matInput [matDatepicker]="DatePicker" [min]="minDate" [max]="maxDate" style="visibility: hidden; width: 0px;">
+						<mat-datepicker touchUi #DatePicker></mat-datepicker>
+					</h5>
+               <div *ngIf="BasketDetails.length > 0 && !UpcomingDays" class="generate-btn-div" [ngClass]="{'disabled': BasketFGroup.invalid}">
+                  <button [disabled]="BasketFGroup.invalid" (click)="onSubmit()" class="generate-btn create-button-btn animated fadeInDown"> Generate Purchase </button>
+               </div>
+					<P *ngIf="UpcomingDays && DummyAlert" style="margin: 0px; text-align: right; font-weight: 500;" >
+						Generate Option enabling After 11 AM
+					</P>
+            </div>
+			</form>
+			<form [formGroup]="BasketFGroup">
+            <div class="row no-margin">
+               <div class="table-responsive">
+                  <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                  <thead #TableHeaderSection>
+                     <tr>
+                        <th>S.No</th>
+								<ng-container *ngFor="let Header of THeaders;let i=index">
+									<th *ngIf="!UpcomingDays || i !== 5">
+										<div class="column-title"> {{Header.Name}} </div>
+										<div *ngIf="i === 1" style="font-weight: 600; font-size: 10px; letter-spacing: 0.5px; opacity: 0.6; "> (basic Quantity * count = Total Quantity) </div>
+									</th>
+								</ng-container>
+                        <th>Actions</th>
+                     </tr>
+                  </thead>   
+                  <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i></div>  
+                  <tbody class="tbl-content">
+                     <ng-container *ngIf="BasketDetails.length > 0" formArrayName="Products">
+                        <tr class="odd" *ngFor="let FControl of getFArray().controls;let i=index" [formGroupName]="i">
+                           <td>{{i+1}}</td>
+                           <td>{{FControl.get('ProductName').value}}</td>
+                           <td>{{FControl.get('BasicUnitQuantity').value}} * {{FControl.get('TotalQuantity').value}} =  {{FControl.get('BasicUnitQuantity').value * FControl.get('TotalQuantity').value}} <span> {{FControl.get('Unit').value}}</span> </td> 
+                           <td>{{FControl.get('TotalCustomers').value}}</td> 
+                           <td> <span> Rs. </span> {{FControl.get('Price_From').value}}</td> 
+                           <td> <span> Rs. </span> {{FControl.get('Price_To').value}}</td> 
+                           <td *ngIf="!UpcomingDays">
+                              <div class="row">
+                                 <div class="col-sm-1"></div>
+                                 <div class="col-sm-1"><label style="line-height: 50px"> Rs. </label> </div>
+                                 <div class="col-sm-9">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                       <input matInput type="number" min="{{FControl.get('Price_From').value}}" max="{{FControl.get('Price_To').value}}" formControlName="UnitPrice" placeholder="UnitPrice" autocomplete="off">                                           
+                                       <!-- <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('UnitPrice')"> </mat-error>                                    -->
+                                    </mat-form-field>
+                                 </div>
+                              </div>
+                           </td>                       
+                           <td>
+                              <div class="action-icon-parent"> 
+                                 <span class="col-action-icon bk-clr-info" matTooltip="View" (click)="ViewDetails(i)"><i class="fa fa-eye" aria-hidden="true"></i></span>
+                              </div>
+                           </td>
+                        </tr>
+                        <div class="table-down-arrow"><i class="fa fa-arrow-circle-down animated infinite fadeInDown"></i></div>  
+                     </ng-container> 
+                     <tr *ngIf="BasketDetails.length === 0">
+                        <td colspan="7"> No Records Found.... </td>
+                     </tr>
+                  </tbody>    
+                  </table>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>  
+</section> 

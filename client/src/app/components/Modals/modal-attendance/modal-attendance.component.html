@@ -1,0 +1,107 @@
+<section *ngIf="Type && ( Type === 'Create')">
+    <div class="modal-body">
+        <form [formGroup]="AttendanceForm" (ngSubmit)="onSubmit()">
+            <div class="modal-header-title">
+                <h5> Attendance ( {{CurrDate | date: 'd-MMM-y'}} - <span
+                        style="color: crimson; font-style: oblique;font-size: small;"> {{Session}} </span> )
+
+                </h5>
+                <span *ngIf="!Uploading " class="modal-container-close" (click)="modalRef.hide();">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i></span>
+            </div>
+            <div class="card box-shadow">
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-md-12">
+                            <label class="text-left side-field-title"> <b>DeliveryBoy Attendance Later</b> </label>
+                            <div class="filter-parent">
+                                <ng-container 
+                                    formArrayName="AttendanceDetailsCancel">
+                                    <div class="filter-result"
+                                        *ngFor="let FControl of getAttendanceFArray().controls;let i=index"
+                                        [formGroupName]="i">
+                                        <span class="label"> {{FControl.get('DeliveryPerson_Name').value}} </span>
+                                        <span class="Filter-close">
+                                            <i class="fa fa-close" (click)="LateDeliveryPersonAdd(FControl, i)"></i>
+                                        </span>
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                        
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="container modal-content-body">
+                <div class="col-sm-12">
+                    <!-- <div class="row time">
+                            <span *ngIf="CurrDate > 12"> Evening Session <span style="color:crimson;" class="animated infinite zoomIn">  {{CurrDate | date: 'HH:mm'}} </span></span> 
+                            <span *ngIf="CurrDate < 12"> Morning Session <span style="color:crimson; font-size: 20px;" class="animated infinite zoomIn">  {{CurrDate | date: 'HH:mm'}}</span> </span>
+                        </div> -->
+                    <div class="row">
+                        <table class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                            <thead #TableHeaderSection>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>
+                                        <div class="column-title">
+                                            Delivery Soldier Name
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="column-title">
+                                            Delivery Line Name
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="column-title">
+                                            Present / Absent
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="column-title">
+                                            Later
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i>
+                            </div>
+                            <tbody #TableBodySection class="tbl-content">
+                                <ng-container *ngIf="DeliveryBoyList.length > 0" formArrayName="AttendanceDetails">
+                                    <tr class="odd" *ngFor="let FControl of getFArray().controls;let i=index"
+                                        [formGroupName]="i">
+                                        <td> {{i+1}} </td>
+                                        <td>{{FControl.get('DeliveryPerson_Name').value}}</td>
+                                        <td>{{FControl.get('DeliveryLine_Name').value}}</td>
+                                        <td>
+                                            <!-- <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill"> -->
+                                            <mat-checkbox formControlName="Present"> </mat-checkbox>
+                                            <!-- </mat-form-field> -->
+                                        </td>
+                                        <td>
+                                            <span class="col-action-icon bk-clr-danger"
+                                                (click)="DeliveryAttendanceCancel(FControl, i)" matTooltip="Click to Cancel"><i
+                                                    class="fa fa-check" aria-hidden="true"></i></span>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" [disabled]="AttendanceForm.status !== 'VALID'|| Uploading"
+                    class="modal-confirm btns-modal-action fill-left-to-right"
+                    [ngClass]="{'disabled': AttendanceForm.status !== 'VALID'|| Uploading}">
+                    <span *ngIf="Type === 'Create' && !Uploading">Submit</span>
+                    <!-- <span *ngIf="Uploading"> Loading... </span> -->
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

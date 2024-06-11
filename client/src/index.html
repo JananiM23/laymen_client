@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Vilfresh</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <style>
+       .loader {
+            width: 100px;
+            height: 100px;
+            line-height: 50px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: helvetica, arial, sans-serif;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: #ce4233;
+            letter-spacing: 0.2em;
+        }
+        .initial-loader {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            font-family: helvetica, arial, sans-serif;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: #ce4233;
+            letter-spacing: 0.2em;
+            -webkit-animation: fa-spin 2s infinite linear;
+            animation: fa-spin 2s infinite linear;
+         }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <app-root>
+        <div class="initial-loader"><img style="width: 100px; height: 100px;" src="./assets/images/settings.png"> </div>
+    </app-root>
+</body>
+
+<script>
+    $(".fa-angle-double-left").hover(function(){
+        document.getElementById("mySidenav").style.width = "160px";
+        $('.fa-angle-double-left').hide();
+    });
+
+    function openNav() {
+      $('.expand').hide();
+      document.getElementById("mySidenav").style.width = "160px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      setTimeout(function(){ $('.expand').show(); }, 800);
+      $('.fa-angle-double-left').show();    
+    }
+    </script>
+
+</html>

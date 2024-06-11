@@ -1,0 +1,75 @@
+<section *ngIf="Type && ( Type === 'Extra')">
+    <div class="modal-body">
+        <form [formGroup]="ExtraProductForm" (ngSubmit)="onSubmit()">
+            <div class="modal-header-title">
+                <h5> {{Type}} Product Configuration</h5>
+                <span *ngIf="!Uploading " class="modal-container-close" (click)="modalRef.hide();"><i
+                        class="fa fa-times-circle" aria-hidden="true"></i></span>
+            </div>
+            <div class="container modal-content-body">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Config
+                                    Date</label>
+                                    <div class="col-md-12 col-lg-8">
+                                        <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                            <input formControlName="ConfigDate" autocomplete="off" matInput [matDatepicker]="ConfigDatePicker" placeholder="ConfigDate">
+                                            <mat-icon matSuffix >event</mat-icon>   
+                                            <mat-datepicker touchUi #ConfigDatePicker></mat-datepicker>
+                                        </mat-form-field>                                    
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">                            
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Product Line</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <mat-select formControlName="Product" placeholder="Select Product List">
+                                            <mat-option>Select Product Line</mat-option>
+                                            <mat-option *ngFor="let Type of ProductList; let i=index"
+                                                value="{{Type._id}}"> {{Type.Product_Name}} </mat-option>
+                                        </mat-select>
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Product')"> </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Price From</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input formControlName="Price_From" matInput placeholder="Price From"> 
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Price_From')"> </mat-error>                                       
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Price To</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input formControlName="Price_To" matInput placeholder="Price To"> 
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Price_From')"> </mat-error>                                       
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" [disabled]="ExtraProductForm.status !== 'VALID'|| Uploading"
+                    class="modal-confirm btns-modal-action fill-left-to-right"
+                    [ngClass]="{'disabled': ExtraProductForm.status !== 'VALID'|| Uploading}">
+                    <span *ngIf="Type === 'Extra' && !Uploading">Submit</span>
+                    <span *ngIf="Uploading"> Loading... </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

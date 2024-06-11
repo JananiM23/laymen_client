@@ -1,0 +1,60 @@
+<section>
+    <div class="modal-body">
+        <form>
+            <div class="modal-header-title">
+                <h5> Delivery Line Info</h5>
+                <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+            </div>           
+            <div class="container modal-content-body">
+                    <div class="col-sm-12">
+                        <div class="row no-margin">
+                            <div class="form-group col-md-12">
+                                <div class="row">
+                                    <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Delivery Line Name:</label>
+                                    <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                        {{Info?.Deliveryline_Name}}
+                                    </div>
+                                </div>
+                            </div>        
+                            <div class="form-group col-md-12">
+                                <div class="row">
+                                    <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Delivery Session:</label>
+                                    <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                        <span *ngIf="Info?.Session === 'Both'">
+                                           {{Info?.Session === 'Both' ? 'Morning & Evening' : ''}}
+                                        </span>
+                                        <span *ngIf="Info?.Session !== 'Both'">
+                                            {{Info?.Session}} 
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>  
+                                                
+                           <div class="form-group col-md-12">
+                                <div class="row">
+                                    <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">
+                                        Status:</label>
+                                    <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                        {{Info?.Active_Status ? 'Active' : 'Inactive' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="row">
+                                    <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Date :</label>
+                                    <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                        {{Info?.updatedAt | date: 'd-MMM-y' }}                                    
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            <div class="modal-actions">          
+                <button type="submit" (click)="modalRef.hide()" class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+                Close
+                </button>
+            </div>
+        </form>   
+    </div>
+</section>

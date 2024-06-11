@@ -1,0 +1,124 @@
+<section *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+    <div class="modal-body">
+        <form [formGroup]="ConfigForm" (ngSubmit)="onSubmit()">
+            <div class="modal-header-title">
+                <h5> {{Type}} Product Configuration</h5> 
+                <span *ngIf="!Uploading" class="modal-container-close" (click)="modalRef.hide();"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+            </div>
+            <div class="container modal-content-body">
+                <div class="col-sm-12" *ngIf="FormStage === 'Stage1'">
+                    <div class="row"> 
+                        <div class="form-group col-lg-8 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Next Date</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input formControlName="Next_Date" autocomplete="off" matInput [matDatepicker]="Next_DatePicker" placeholder="next date">
+                                        <mat-icon matSuffix >event</mat-icon>   
+                                        <mat-datepicker touchUi #Next_DatePicker></mat-datepicker>
+                                    </mat-form-field>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-8 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right">Range To Date
+                                   <span style="display: block; color: chocolate; font-size: 12px;"> (Non Mandatory Field)</span>
+                                </label>
+                                <div class="col-md-12 col-lg-8">                                   
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <mat-select class="select-box" formControlName="Date_Range" placeholder="Select Date">
+                                            <mat-option *ngFor="let DateRange of DateRanges" [value]="DateRange.Key">{{DateRange.Name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>                                
+                    </div>               
+                </div>               
+                <div class="col-sm-12" *ngIf="FormStage === 'Stage2'">
+                    <ng-container formArrayName="DatesArray" *ngFor="let Dates of GetDatesArray(); let i = index;">
+                        <div class="row" [formGroupName]="i">
+                            <div class="col-sm-6"> 
+                                <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                    <input formControlName="Date" matInput [matDatepicker]="DateArr" placeholder="Date">
+                                    <mat-icon matSuffix >event</mat-icon>
+                                    <mat-datepicker touchUi #DateArr></mat-datepicker>
+                                </mat-form-field>  
+                            </div>
+                            <div class="col-sm-6">
+                                <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                    <mat-select class="select-box" formControlName="Products"  placeholder="Products" multiple>
+                                        <mat-option *ngFor="let Product of Productlist; let j=index" [value]="Product._id"> {{Product.Product_Name}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>               
+                </div>
+                <div class="col-sm-12" *ngIf="FormStage === 'Stage3'">
+                    <ng-container formArrayName="DatesArray" *ngFor="let Dates of GetDatesArray(); let i = index;">
+                        <div [formGroupName]="i">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p style="font-weight: bold; color: maroon; font-size: medium;"> Date: {{Dates.get('Date').value | date: 'd/M/y'}} </p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p style="margin-left: 10px;"> Price Range From </p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p style="margin-right: 60px;"> Price Range To </p>
+                                    </div>
+                                </div>                               
+                            </div>  
+                            <ng-container formArrayName="ProductsArray" *ngFor="let Dates of Dates.get('ProductsArray').controls; let j = index;">
+                                <div [formGroupName]="j">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                <mat-select class="select-box" formControlName="Product" placeholder="Product">
+                                                    <mat-option *ngFor="let Product of Productlist; let j=index" [value]="Product._id"> {{Product.Product_Name}} </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                <input matInput formControlName="Price_From" placeholder="Price From">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-3" >
+                                            <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                <input matInput formControlName="Price_To" placeholder="Price To">
+                                                <mat-error *ngIf="checkPriceToValidation(i, j)"> Value is Invalid </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </div>
+
+            </div>
+            <div class="modal-actions">
+            <button type="button" (click)="ProceedOne()"  *ngIf="FormStage === 'Stage1'" [disabled]="ConfigForm.status !== 'VALID'|| Uploading"
+                class="modal-confirm btns-modal-action fill-left-to-right"
+                [ngClass]="{'disabled': ConfigForm.status !== 'VALID'|| Uploading}">
+                <span>Proceed</span>             
+            </button>
+            <button type="button" (click)="ProceedTwo()" *ngIf="FormStage === 'Stage2'" [disabled]="ConfigForm.status !== 'VALID'|| Uploading"
+                class="modal-confirm btns-modal-action fill-left-to-right"
+                [ngClass]="{'disabled': ConfigForm.status !== 'VALID'|| Uploading}">
+                <span *ngIf="FormStage === 'Stage2'" >Proceed</span>             
+            </button>
+            <button *ngIf="FormStage === 'Stage3'" type="submit" [disabled]="ConfigForm.status !== 'VALID'|| Uploading"
+                class="modal-confirm btns-modal-action fill-left-to-right"
+                [ngClass]="{'disabled': ConfigForm.status !== 'VALID'|| Uploading}">
+                <span *ngIf="Type === 'Create' && !Uploading ">Submit</span>
+                <span *ngIf="Uploading"> Loading... </span>
+            </button>
+            </div>
+        </form>
+    </div>
+</section>

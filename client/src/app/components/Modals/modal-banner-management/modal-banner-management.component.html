@@ -1,0 +1,138 @@
+<section *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+   <div class="modal-body">
+       <form [formGroup]="BannerForm" (ngSubmit)="onSubmit()">
+           <div class="modal-header-title">
+               <h5> {{Type}} Banner</h5>
+               <span *ngIf="!Uploading " class="modal-container-close" (click)="modalRef.hide();">
+                   <i class="fa fa-times-circle" aria-hidden="true"></i></span>
+           </div>
+           <div class="container modal-content-body">
+               <div class="col-sm-12">
+                   <div class="row">
+                       <div class="form-group col-md-12">
+                           <div class="row">
+                               <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Banner Upload</label>
+                               <div class="col-md-12 col-lg-8">
+                                   <input type='file' (change)="fileChangeEvent($event)" #fileInput accept="image/png, image/jpeg, image/jpg, image/PNG, image/JPEG, image/JPG, image/gif, image/GIF">
+                               </div>
+                           </div>
+                           <div class="row">
+                               <div class="col-md-6">
+                                   <img [src]="croppedImage" style="height: 160px;"/>   
+                                   <!-- <div id="LoaderSection" class="tbl-loading-center">
+                                           <span>Loading.....</span>
+                                   </div> -->
+                               </div>
+                               <div class="col-md-6">
+                                   <image-cropper
+                                       [imageChangedEvent]="imageChangedEvent"
+                                       [maintainAspectRatio]="true"
+                                       [aspectRatio]="6 / 3"
+                                       imageQuality="70"
+                                       format="jpg"
+                                       (imageCropped)="imageCropped($event)"
+                                       (cropperReady)="cropperReady()"
+                                       (loadImageFailed)="loadImageFailed()"></image-cropper>
+                               </div>
+                           </div>
+                       </div>
+                         
+                       <div class="form-group col-md-12">
+                           <div class="row">
+                               <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Banner Title</label>
+                               <div class="col-md-12 col-lg-8">
+                                   <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                       <input matInput formControlName="title" placeholder="Banner Title " autocomplete="off" maxlength="30">
+                                       <mat-error [innerHTML]="GetFormControlErrorMessage('title')"></mat-error>                                   
+                                    </mat-form-field>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group col-md-12">
+                           <div class="row">
+                               <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Banner Description </label>
+                               <div class="col-md-12 col-lg-8">
+                                   <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                   <textarea matInput formControlName="description" placeholder="Banner Description" maxlength="200" autocomplete="off"></textarea>
+                                   <mat-error [innerHTML]="GetFormControlErrorMessage('description')"></mat-error>                                  
+                                </mat-form-field>
+                               </div>
+                           </div>
+                       </div>
+
+                   </div>
+               </div>
+           </div>
+           <div class="modal-actions">
+               <button type="submit" [disabled]="BannerForm.status !== 'VALID'|| Uploading"
+                   class="modal-confirm btns-modal-action fill-left-to-right"
+                   [ngClass]="{'disabled': BannerForm.status !== 'VALID'|| Uploading}">
+                   <span *ngIf="Type === 'Create' && !Uploading">Submit</span>
+                   <span *ngIf="Type === 'Edit' && !Uploading">Update</span>
+                   <span *ngIf="Uploading"> Loading... </span>
+               </button>
+           </div>
+       </form>
+   </div>
+</section>
+
+<section *ngIf="Type && ( Type === 'View')">
+   <div class="modal-body">
+       <form>
+           <div class="modal-header-title">
+               <h5> Banner Details</h5>
+               <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+           </div>
+           <div class="container modal-content-body">
+               <div class="col-sm-12">
+                   <div class="row no-margin">
+                       <div class="form-group col-md-12">
+                           <div class="row">
+                               <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Banner File :</label>
+                               <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                   <!-- {{Banner?.Banner_file }} -->
+                                   <!-- {{Banner?.File_Name }} -->
+                                   <img src="{{Banner?.Banner_file}}"  class="banner-preview"/>
+                               </div>
+                           </div>
+                       </div>
+                       
+                       
+                       <div class="form-group col-md-12">
+                           <div class="row">
+                               <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">
+                                   Title:</label>
+                               <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                   {{Banner?.Title }}
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group col-md-12">
+                           <div class="row">
+                               <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Description:</label>
+                               <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                   {{Banner?.Description }}
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="form-group  col-md-12">
+                           <div class="row">
+                               <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Date:</label>
+                               <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                   {{Banner?.updatedAt | date: 'd-MMM-y' }}
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="modal-actions">
+               <button type="submit" (click)="modalRef.hide()"
+                   class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+                   Close
+               </button>
+           </div>
+       </form>
+   </div>
+</section>

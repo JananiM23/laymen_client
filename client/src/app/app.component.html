@@ -1,0 +1,287 @@
+<div class="fixed-bottom-popup animated fadeInRight">
+   <p>Fixed Popup</p>
+</div>
+
+<ng-container *ngFor="let Toastr of ToastrList; let i=index">
+   <div class="Toastr_Message animated bounceInDown" [ngClass]="Toastr.Type" [style.top.px]="Toastr.Top">
+      <div class="loader"></div>
+      <div class="Message_Icon">
+         <i *ngIf="Toastr.Type === 'Success'" class="material-icons">check_circle</i>
+         <i *ngIf="Toastr.Type === 'Info'" class="material-icons">info</i>
+         <i *ngIf="Toastr.Type === 'Warning'" class="material-icons">error</i>
+         <i *ngIf="Toastr.Type === 'Error'" class="material-icons">cancel</i>
+      </div>
+      <div class="Message">
+         <h6 class="Title"> {{Toastr.Type}} Message </h6>
+         <h6 class="body"> {{Toastr.Message | slice:0:42}} {{Toastr.Message?.length > 42 ? '...' : ' ' }} </h6>
+      </div>
+      <div class="Message_Close" (click)="HideToastr(i)">
+         <i class="material-icons">close</i>
+      </div>
+   </div>
+</ng-container>
+<mat-toolbar class="green-gr-background" *ngIf="UserLoggedIn">
+   <div class="brand-logo">
+      <img src="../assets/images/brand-logo.png" alt="VilFresh Logo" />
+   </div>
+   <span class="toggle-sideNavBtn" (click)="SideNavToggle()">
+      <i class="material-icons">list </i>
+   </span>
+   <header class="topbar">
+      <div class="container-fluid">
+         <div class="row">
+            <!-- social icon-->
+            <div class="col-sm-12">
+               <ul class="social-network">
+                  <!-- <li><a class="waves-effect waves-dark" matTooltip="Users"><i class="fa fa-user-plus"
+                           aria-hidden="true"></i></a></li> -->
+                  <!-- <li><a class="waves-effect waves-dark" matTooltip="Star"><i class="fa fa-star"
+                           aria-hidden="true"></i></a></li> -->
+                  <li> <a *ngIf="ShowNotification">
+                        <span class="notification-icon">
+                           <span *ngIf="NotifyCount > 0" class="notify-count-num">{{NotifyCount}}</span>
+                           <!-- <img class="static" (click)="NotifyPanelToggle()" src="../assets/images/Loader.png" width="30">
+                           <img class="active" (click)="NotifyPanelToggle(); GetNotificationList()" src="../assets/images/Loader.gif"  width="28"> -->
+                           <img  (click)="NotifyPanelToggle(); GetNotificationList()" src="../assets/images/Loader.gif" alt="Cow notification"  width="30" />
+                        
+                           <div class="notify-panel" [style.display]="ShowNotifyPanel ? 'block' : 'none'">
+                              <div class="arrow-up"></div>
+                              <div class="notify-header">
+                                 <div class="fl-left"> Notification </div>
+                                 <div class="fl-right"> <span>Total</span><b class="new-notify-num">{{Notification.length}}</b> </div>
+                              </div>
+                              <div class="notify-content-body">
+                                 <ng-container>
+                                    <ul class="notify-list notification_sub_list">
+                                       <li class="notify-un-read UnClickable" *ngFor="let Notify of Notification;let i=index" [ngClass]="{'Clickable': Notify?.CustomerID && Notify?.CustomerID !== null }">
+                                          <span class="notify-no">{{i + 1}})</span>
+                                          <p class="notify-msg" (click)="Redirect(Notify.CustomerID, i)" > <span>{{ Notify?.Message }}</span> </p>
+                                          <span *ngIf="!Notify?.Message_Viewed" class="new-badge">New</span>
+                                       </li>
+                                    </ul>
+                                 </ng-container>
+                              </div>
+                              <div class="notify-footer" *ngIf="Notification.length !== 0">
+                                 <a class="fl-left" (click)="DeleteAllRead()"> Delete All Read </a>
+                                 <a class="fl-right notify-text-hover" (click)="MarkAllAsRead()"> Mark all As Read </a>
+                              </div>
+                           </div>
+                        </span>
+                     </a></li>
+                  <li><a class="waves-effect waves-dark" matTooltip="User Profile">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        <p class="txt-user-name">{{UserInfo?.Name}}</p>
+                     </a></li>
+                  <li><a class="waves-effect waves-dark" (click)="LogOut()" matTooltip="Log Out"><i aria-hidden="true"
+                           class="fa fa-sign-out"></i></a></li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </header>
+   <div id="cssmenu">
+      <ul>
+         <!-- <li><a ><span>Customer </span></a></li> -->
+         <!-- <li class='active has-sub'><a ><span>Customer Management</span></a>
+            <ul class="second-sub-menu">
+               <li class='has-sub'><a ><span>Customer Records</span></a>
+                  <ul>
+                     <li><a ><span>Sub Product</span></a></li>
+                     <li class='last'><a ><span>Sub Product</span></a></li>
+                  </ul>
+               </li>
+               <li class='has-sub'><a ><span>Customer Support</span></a>
+                  <ul>
+                     <li><a ><span>Sub Product</span></a></li>
+                     <li class='last'><a ><span>Sub Product</span></a></li>
+                  </ul>
+               </li>
+               <li class='has-sub'><a><span>Customer Feedback</span></a>
+            </ul>
+         </li> -->
+         <li class='has-sub' routerLinkActive="active"><a><span>Customer Management</span></a>
+            <ul class="second-sub-menu">
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['/customer-management/customer-records']"><span>Customer Records</span></a>
+               </li>
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['customer-management/SupportTitle-Records']"><span>Customer Support Title</span></a>
+               </li>
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['/customer-management/customer-support']"><span>Customer Support</span></a>
+               </li>
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['/customer-management/customer-feedback']"><span>Customer Feedback</span></a>
+               </li>
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['/Customer-Referrals']"><span>Customer Referrals</span></a>
+               </li>
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['/Customer-Analytics']"><span>Customer QA Config</span></a>
+               </li>
+            </ul>
+         </li>
+         <!-- <li class="has-sub" routerLinkActive="active"><a><span>Order Management</span></a>
+            <ul class="second-sub-menu">
+               <li class='' routerLinkActive="active" ><a [routerLink]="['order-management/order-records']"><span>Orders</span></a></li>
+               <li class=''routerLinkActive="active" ><a [routerLink]="['order-management/Current-Orders']"><span>Current Orders</span></a></li>
+            </ul>
+         </li> -->
+         <li class="has-sub" routerLinkActive="active"><a><span>Delivery Management</span></a>
+            <ul class="second-sub-menu">
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['/delivery-management/delivery-records']"><span>Delivery Lines</span></a>
+               </li>
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['delivery-management/delivery-boy-records']"><span>Delivery Soldier</span></a>
+               </li>
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['Deliveryboy-Attendance']"><span> Soldiers Attendance </span></a>
+               </li>
+            </ul>
+         </li>
+
+         <li class="has-sub" routerLinkActive="active"><a><span> Orders Management </span></a>
+            <ul class="second-sub-menu">
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['/order-management/order-records']"><span>Orders List</span></a>
+               </li>
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['/order-management/order-products']"><span>Ordered Products</span></a>
+               </li>
+               <li class='' routerLinkActive="active">
+                  <a [routerLink]="['Deliveryboy-Tracking']"><span> Soldiers Tracking </span></a>
+               </li>
+            </ul>
+         </li>
+
+
+         <li class='has-sub' routerLinkActive="active"><a><span>VilFresh Basket</span></a>
+            <ul class="second-sub-menu">
+               <li class='' routerLinkActive="active"><a [routerLink]="['Product-Configuration']"><span>Product Configuration</span></a></li>
+               <li class='' routerLinkActive="active"><a [routerLink]="['order-management/purchase-records']"><span> Purchase History</span></a></li>
+            </ul>
+         </li>
+         <li class='has-sub' routerLinkActive="active"><a><span>Payment Management</span></a>
+            <ul class="second-sub-menu">
+               <li class='' routerLinkActive="active"><a [routerLink]="['payment-management/payment-records']"><span>Wallet Management</span></a></li>
+               <li class='' routerLinkActive="active"><a [routerLink]="['Daily-CollectionAmount']"><span> Soldiers Cash Collect</span></a></li>
+            </ul>
+         </li>
+      
+         <!-- <li class='last' routerLinkActive="active"><a [routerLink]="['Vilfresh-Basket']"><span> VilFresh Basket</span></a></li> -->
+         <li class='last' routerLinkActive="active"><a [routerLink]="['banner-management/banner-records']"><span>Banner Management</span></a></li>   
+         
+         <li class='last' routerLinkActive="active"><a [routerLink]="['notification-Management/notification-records']"><span>Notification Management</span></a></li> 
+
+      </ul>
+   </div>
+
+
+
+   <!--Toolbar right side Icons links-->
+   <div class="nav-icons">
+      <ul>
+         <li>
+            <a (click)="LogOut()"><img src="assets/images/05-logout.png" /></a>
+         </li>
+      </ul>
+   </div>
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container" [hasBackdrop]="false">
+   <!-- <mat-sidenav #SideNav [fixedInViewport]="true" [fixedTopGap]="56" [mode]="'side'">
+         <div class="col-md-12 no-padding">
+            <div class="userprofile">
+               <span> Logged in as </span>
+               <span class="User"> {{UserInfo?.Name}} </span>
+               <span class="User"> ADMIN </span>
+            </div>
+         </div>
+         <div class="col-md-12 no-padding">
+            <div class="vilfresh-menus">
+               <ul>
+                  <li>
+                     <a [routerLink]="['/customer-management/customer-records']" class="">
+                        <div class="menu-list">
+                           <img src="../assets/images/menu-icon.png">
+                           <span>Customer Records</span>
+                        </div>
+                     </a>
+                  </li>
+                  <li>
+                     <a [routerLink]="['/customer-management/customer-feedback']" class="">
+                        <div class="menu-list">
+                           <img src="../assets/images/menu-icon.png">
+                           <span>Customer FeedBack</span>
+                        </div>
+                     </a>
+                  </li>
+                  <li>
+                     <a [routerLink]="['customer-management/customer-support']" class="">
+                        <div class="menu-list">
+                           <img src="../assets/images/menu-icon.png">
+                           <span>Customer Support</span>
+                        </div>
+                     </a>
+                  </li>
+                  <li>
+                     <a [routerLink]="['/delivery-management/delivery-records']" class="">
+                        <div class="menu-list">
+                           <img src="../assets/images/menu-icon.png">
+                           <span>Delivery Line</span>
+                        </div>
+                     </a>
+                  </li>
+                  <li>
+                     <a [routerLink]="['delivery-management/delivery-boy-records']" class="">
+                        <div class="menu-list">
+                           <img src="../assets/images/menu-icon.png">
+                           <span>Delivery Soldiers</span>
+                        </div>
+                     </a>
+                  </li>
+                  <li>
+                     <a [routerLink]="['banner-management/banner-records']" class="">
+                        <div class="menu-list">
+                           <img src="../assets/images/menu-icon.png">
+                           <span>Banner Management</span>
+                        </div>
+                     </a>
+                  </li>
+                  <li>
+                        <a [routerLink]="['order-management/order-records']" class="">
+                           <div class="menu-list">
+                              <img src="../assets/images/menu-icon.png">
+                              <span>Orders</span>
+                           </div>
+                        </a>
+                     </li>
+                     <li>
+                     <a [routerLink]="['wallet-management/wallet-records']" class="">
+                        <div class="menu-list">
+                           <img src="../assets/images/menu-icon.png">
+                           <span>Wallet Management</span>
+                        </div>
+                     </a>
+                  </li> 
+                  <li>
+                     <a [routerLink]="['order-management/purchase-records']" class="">
+                        <div class="menu-list">
+                           <img src="../assets/images/menu-icon.png">
+                           <span>Purchase Records</span>
+                        </div>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </mat-sidenav> -->
+
+   <mat-sidenav-content
+      [ngStyle]="{ 'padding': UserLoggedIn ? '15px 20px' : '0px', 'margin-top': UserLoggedIn ? '66px' : '0px'}">
+      <router-outlet></router-outlet>
+   </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- <router-outlet></router-outlet> -->

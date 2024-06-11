@@ -1,0 +1,94 @@
+<section *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+    <div class="modal-body">
+       <form [formGroup]="AnalyticForm" (ngSubmit)="onSubmit()">
+       <div class="modal-header-title">
+          <h5> {{Type}} Analytics</h5>
+          <span *ngIf="!Uploading" class="modal-container-close" (click)="modalRef.hide();"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+       </div>
+       <div class="container modal-content-body">
+          <div class="col-sm-12">
+             <div class="row">  
+                  <div class="form-group col-sm-10">
+                       <div class="row">
+                           <label class="col-md-12 col-lg-4 col-form-label text-lg-right "> Question </label>
+                           <div class="col-md-12 col-lg-8">
+                                <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                    <input matInput formControlName="Question" placeholder="Enter the Questions " autocomplete="off">                                    
+                                </mat-form-field>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="form-group col-sm-10">
+                       <div class="row">
+                           <div class="col-sm-12 text-right mb-20">
+                            <span class="mr-15"> Click Here to Answer </span>
+                            <span class="btn-add-plus" (click)="addAnswers()" ><i class="fa fa-plus"></i></span>
+                           </div>
+                       </div> 
+                    <ng-container formArrayName="Answer">
+                        <div class="row" *ngFor="let Answer of GetFormArray('Answer'); let i=index" [formGroupName]="i">
+                            <label class="col-md-12 col-lg-4 col-form-label text-lg-right"> Options ( {{i + 1}} ) </label>
+                            <div class="col-md-12 col-lg-7">
+                                <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                    <textarea formControlName="Answer" matInput placeholder="Enter Answers"></textarea>
+                                    <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Answer')"> </mat-error>
+                                </mat-form-field>
+                                <!-- <span class="btn-remove-minus" (click)="removeAnswers(i)"><i class="fa fa-minus"></i></span> -->
+                            </div>   
+                            <div *ngIf="i > 0" class="col-sm-1">
+                                <span class="btn-remove-minus"  (click)="removeAnswers(i)"><i class="fa fa-minus"></i></span>
+                            </div>                   
+                        </div>
+                    </ng-container>
+                   </div>                                     
+             </div>
+          </div>   
+       </div>
+       <div class="modal-actions">
+          <button type="submit" [disabled]="AnalyticForm.status !== 'VALID'|| Uploading" class="modal-confirm btns-modal-action fill-left-to-right" [ngClass]="{'disabled': AnalyticForm.status !== 'VALID'|| Uploading}">
+             <span *ngIf="Type === 'Create' && !Uploading">Submit</span>
+             <span *ngIf="Type === 'Edit' && !Uploading">Update</span>
+             <span *ngIf="Uploading"> Loading... </span>
+          </button>
+       </div>
+       </form>
+    </div>
+</section>
+<section *ngIf="Type && ( Type === 'View')">
+    <div class="modal-body">
+        <form>
+            <div class="modal-header-title">
+                <h5> Analytics Question Details</h5>
+                <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+            </div>
+            <div class="container modal-content-body">
+                <div class="col-sm-12">
+                    <div class="row no-margin">
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Question :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{Question?.Question }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">                         
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Answers :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl" >
+                                    <li *ngFor="let Answers of Question?.Answer; let i=index">
+                                    <span> ({{i + 1 }})</span>   {{ Answers?.Answer }}
+                                    </li> <br>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" (click)="modalRef.hide()" class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">Close
+                </button>
+            </div>
+        </form>
+    </div>
+</section> 

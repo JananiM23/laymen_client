@@ -1,0 +1,130 @@
+<section>
+    <div class="modal-body">
+        <form>
+            <div class="modal-header-title">
+                <h5> Order Info</h5>
+                <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle"
+                        aria-hidden="true"></i></span>
+            </div>
+            <div class="container modal-content-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group ">
+                            <div class="row no-margin">
+                                <label class="col-sm-12 col-md-6 text-lg-right lbl">Customer
+                                    Name :</label>
+                                <div class="col-sm-12 col-md-6 lbl">
+                                    {{OrderInfo?.CustomerInfo?.Customer_Name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="row no-margin">
+                                <label class="col-sm-12 col-md-6 text-lg-right lbl">Delivery
+                                    Line :</label>
+                                <div class="col-sm-12 col-md-6 lbl">
+                                    {{OrderInfo?.DeliveryInfo?.Deliveryline_Name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="row no-margin">
+                                <label class="col-sm-12 col-md-6 text-lg-right lbl">Customer
+                                    Address :</label>
+                                <div class="col-sm-12 col-md-6 lbl">
+                                    {{OrderInfo?.CustomerInfo?.Address }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="col-sm-12 col-md-6 text-lg-right lbl">Total Payable Amount :</label>
+                                <div class="col-sm-12 col-md-6 lbl">
+                                    {{OrderInfo?.Payable_Amount }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="col-sm-12 col-md-6 text-lg-right lbl">Ordered Date :</label>
+                                <div class="col-sm-12 col-md-6 lbl">
+                                    {{ OrderInfo?.createdAt | date: 'd-MMM-y' }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="row no-margin">
+                                <label class="col-sm-12 col-md-6 text-lg-right lbl">Total Items
+                                    Count :</label>
+                                <div class="col-sm-12 col-md-6 lbl">
+                                    {{OrderInfo?.Item_Counts }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="row no-margin">
+                                <label class="col-sm-12 col-md-6 text-lg-right lbl">Delivery Date
+                                    :</label>
+                                <div class="col-sm-12 col-md-6 lbl">
+                                    {{Info?.DeliveryDate | date: 'd-MMM-y' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                    <thead #TableHeaderSection>
+                        <tr>
+                            <th>S.No</th>
+                            <th>
+                                <div class="column-title">
+                                    Product Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="column-title">
+                                    Required Quantity
+                                </div>
+                                <div style="font-weight: 600; font-size: 10px; letter-spacing: 0.5px; opacity: 0.6; "> (basic Quantity * count = Total Quantity) </div>
+                            </th>
+                            <th>
+                                <div class="column-title">
+                                    Unit Price
+                                </div>
+                            </th>
+                            <th>
+                                <div class="column-title">
+                                    Total Amount
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i> </div>
+                    <tbody #TableBodySection class="tbl-content">
+                        <ng-container *ngIf="Info?.Orders[0]?.Item_Details.length > 0">
+                            <tr class="odd" *ngFor="let ProductArray of OrderInfo?.Item_Details let i=index">
+                                <td> {{i+1}} </td>
+                                <td> {{ProductArray?.ProductId?.Product_Name}} </td>
+                                <td *ngIf="OrderInfo.Order_Type === 'Subscription_From'"> {{ ProductArray?.ProductId?.BasicUnitQuantity}} * {{ProductArray?.Quantity / ProductArray?.ProductId?.BasicUnitQuantity}} = {{ProductArray?.Quantity / ProductArray?.ProductId?.BasicUnitQuantity * ProductArray?.ProductId?.BasicUnitQuantity}} <span> {{ProductArray?.ProductId?.Unit}}</span></td>
+                                <td *ngIf="OrderInfo.Order_Type !== 'Subscription_From'"> {{ ProductArray?.ProductId?.BasicUnitQuantity}} * {{ProductArray?.Quantity}} = {{ProductArray?.Quantity * ProductArray?.ProductId?.BasicUnitQuantity }} <span> {{ProductArray?.ProductId?.Unit}}</span></td>
+                                <td> <span> Rs. </span> {{ProductArray?.Unit_Price}} </td>
+                                <td> <span> Rs. </span> {{ProductArray?.Total_Amount}} </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" (click)="modalRef.hide()"
+                    class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+                    Close
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

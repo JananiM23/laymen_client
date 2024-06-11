@@ -1,0 +1,451 @@
+<div class="container">
+  <div class="form">
+    <div class="sheet">
+      <div class="o_form_sheet position-relative clearfix">
+        <br>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="head-name">
+              <h1>
+                <div name="name" class="head-titl">
+                  <span *ngIf="CustomerDetails !== undefined">
+                    {{CustomerDetails?.Customer_Name}}
+                  </span>
+
+                </div>
+              </h1>
+              <div>
+                <label class="main-labl">Delivery line :</label>&nbsp;
+                <span class="labl-val">{{CustomerDetails?.Delivery_Line?.Deliveryline_Name}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-xl-6 col-md-12">
+              <div class="animated fadeInUp card contnt">
+                <div class="card-content">
+                  <div class="row">
+                    <div class="col-8">
+                      <h5>₹ {{CustomerDetails?.VilfreshMoney_Limit -
+                        (CustomerDetails?.VilfreshCredit_Limit -
+                        CustomerDetails?.AvailableCredit_Limit )}} </h5>
+                      <h6 style="color: red;">Available <span>Amount</span></h6>
+                    </div>
+                    <div class="col-4">
+                      <img class="wallet-image" matTooltip="Edit Wallet" src="../../../../assets/images/walt.png"
+                        (click)="AddVilfreshMoney()" alt="wall" height="50px">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="o_notebook d-flex w-100 horizontal flex-column">
+          <div class="o_notebook_headers">
+            <mat-tab-group>
+              <mat-tab label="Products Purchased">
+                <br>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-2">
+                      <div class="table-entries-and-sortby">
+                        <label>Limits
+                          <mat-form-field class="full-width tbl-limits" [floatLabel]="'never'" appearance="fill">
+                            <mat-select [(ngModel)]="LimitCount" (ngModelChange)="Pagination_Action(1)">
+                              <mat-option [value]="5">5</mat-option>
+                              <mat-option [value]="10">10</mat-option>
+                              <mat-option [value]="25">25</mat-option>
+                              <mat-option [value]="50">50</mat-option>
+                              <mat-option [value]="100">100</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row no-margin">
+                  <div class="table-responsive">
+                    <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                      <thead #TableHeaderSection>
+                        <tr>
+                          <th>S.No</th>
+                          <th *ngFor="let Header of ProdHeaders;let i=index">
+                            <div class="column-title"> {{Header.Name}}
+
+                            </div>
+                          </th>
+
+                        </tr>
+                      </thead>
+                      <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i></div>
+                      <tbody #TableBodySection class="tbl-content">
+                        <ng-container>
+                          <tr class="odd" *ngFor="let product of products; index as i">
+                            <td>{{ SerialNoAddOn+i+1}}</td>
+                            <td>{{product?.date }}</td>
+                            <td>{{product?.productname}}</td>
+                            <td>{{product?.quantity |number}}</td>
+                            <td>{{product?.description}}</td>
+                            <td>{{product?.sts}}</td>
+
+                            <td>{{product?.total | number}} </td>
+
+                          </tr>
+                          <div class="table-down-arrow"><i
+                              class="fa fa-arrow-circle-down animated infinite fadeInDown"></i></div>
+                        </ng-container>
+                        <tr *ngIf="CustomerDetails.length === 0">
+                          <td colspan="9"> No Records Found.... </td>
+                        </tr>
+                      </tbody>
+                      <div #TableLoaderSection class="tbl-loading-center">
+                        <div id="inTurnFadingTextG">
+                          <div id="inTurnFadingTextG_1" class="inTurnFadingTextG">L</div>
+                          <div id="inTurnFadingTextG_2" class="inTurnFadingTextG">O</div>
+                          <div id="inTurnFadingTextG_3" class="inTurnFadingTextG">A</div>
+                          <div id="inTurnFadingTextG_4" class="inTurnFadingTextG">D</div>
+                          <div id="inTurnFadingTextG_5" class="inTurnFadingTextG">I</div>
+                          <div id="inTurnFadingTextG_6" class="inTurnFadingTextG">N</div>
+                          <div id="inTurnFadingTextG_7" class="inTurnFadingTextG">G</div>
+                          <div id="inTurnFadingTextG_8" class="inTurnFadingTextG">.</div>
+                          <div id="inTurnFadingTextG_9" class="inTurnFadingTextG">.</div>
+                          <div id="inTurnFadingTextG_10" class="inTurnFadingTextG">.</div>
+                        </div>
+                      </div>
+                    </table>
+                  </div>
+                </div>
+                 <br>
+                <br>
+                <div class="pagination-wrapper margin-top-10">
+                  <div class="table-go-page-entries">
+                      <label>Go page
+                          <mat-form-field class="width-auto" style="padding: 0px 10px 0px 6px;">
+                              <input matInput type="number" autocomplete="off" class="input-go-entries" min="1"
+                                  max="{{PagesArray.length}}" [(ngModel)]="GoToPage">
+                          </mat-form-field>
+                          <span class="go-search-entries  green-rgb-background" matTooltip="Go to Page"
+                              (click)="Pagination_Action(GoToPage)">GO</span>
+                      </label>
+                  </div>
+                  <div class="page-show-entires">
+                      <div class="txt-show-records" [innerHTML]="ShowingText"></div>
+                  </div>
+                  <div class="page-number">
+                      <ul class="pagination hidden-xs">
+                          <li>
+                              <a class="{{PagePrevious['Class']}}" (click)="Pagination_Action(PagePrevious['Value'])"
+                                  matTooltip="Previous">
+                                  <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                              </a>
+                          </li>
+                          <li *ngFor="let Page of PagesArray; let i=index" class="{{Page.Class}}"
+                              [ngClass]="{'active': Page.Active}" (click)="Pagination_Action(Page.Value)">
+                              <a>
+                                  <p>{{Page.Text}}</p>
+                              </a>
+                          </li>
+                          <li>
+                              <a class="{{PageNext['Class']}}" (click)="Pagination_Action(PageNext['Value'])"
+                                  matTooltip="Next">
+                                  <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                              </a>
+                          </li>
+                      </ul>
+                      <ul class="pagination visible-xs">
+                          <li><a>
+                                  <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                              </a></li>
+                          <li><a>
+                                  <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                              </a></li>
+                      </ul>
+                  </div>
+              </div>
+              </mat-tab>
+              <mat-tab label="Credit">
+                <br>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-2">
+                      <div class="table-entries-and-sortby">
+                        <label>Limits
+                          <mat-form-field class="full-width tbl-limits" [floatLabel]="'never'" appearance="fill">
+                            <mat-select [(ngModel)]="LimitCount" (ngModelChange)="Pagination_Action(1)">
+                              <mat-option [value]="5">5</mat-option>
+                              <mat-option [value]="10">10</mat-option>
+                              <mat-option [value]="25">25</mat-option>
+                              <mat-option [value]="50">50</mat-option>
+                              <mat-option [value]="100">100</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row no-margin">
+                  <div class="table-responsive">
+                    <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                      <thead #TableHeaderSection>
+                        <tr>
+                          <th>S.No</th>
+                          <th *ngFor="let Header of CredHeaders;let i=index">
+                            <div class="column-title"> {{Header.Name}}
+
+                            </div>
+                          </th>
+                          <!-- <th>Actions</th> -->
+
+                        </tr>
+                      </thead>
+                      <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i></div>
+                      <tbody #TableBodySection class="tbl-content">
+                        <ng-container >
+                          <tr class="odd" *ngFor="let credt of Credit; index as i">
+                            <td>{{ SerialNoAddOn+i+1}}</td>
+                            <td>{{credt?.date}} </td>
+                            <td>{{credt?.productname}}</td>
+                            <td>{{credt?.quantity | number}}</td>
+                            <td>{{credt?.description}}</td>
+                            <td>{{credt?.creditlmt}}</td>
+                            <td>-{{credt?.spent | number}}</td>
+<!-- {{CustomerDetails?.VilfreshMoney_Limit -
+                        (CustomerDetails?.VilfreshCredit_Limit -
+                        CustomerDetails?.AvailableCredit_Limit )}}  -->
+                        <!-- {{ CreditHistory?.Available_Limit  - 
+                          (CreditHistory.Previous_AvailableLimit !== undefined ? CreditHistory?.Previous_AvailableLimit : 0)}} -->
+                            <td>{{credt?.creditlmt - credt?.spent }} </td>
+                            <!-- <td>
+                              <span class="col-action-icon bk-clr-warning" matTooltip="Edit Credit"
+                                (click)="AddCreditMoney()"><i class="fa fa fa-pencil" aria-hidden="true"></i></span>
+                            </td> -->
+                          </tr>
+                          <div class="table-down-arrow"><i
+                              class="fa fa-arrow-circle-down animated infinite fadeInDown"></i></div>
+                        </ng-container>
+                        <tr *ngIf="CustomerDetails.length === 0">
+                          <td colspan="9"> No Records Found.... </td>
+                        </tr>
+                      </tbody>
+                      <div #TableLoaderSection class="tbl-loading-center">
+                        <div id="inTurnFadingTextG">
+                          <div id="inTurnFadingTextG_1" class="inTurnFadingTextG">L</div>
+                          <div id="inTurnFadingTextG_2" class="inTurnFadingTextG">O</div>
+                          <div id="inTurnFadingTextG_3" class="inTurnFadingTextG">A</div>
+                          <div id="inTurnFadingTextG_4" class="inTurnFadingTextG">D</div>
+                          <div id="inTurnFadingTextG_5" class="inTurnFadingTextG">I</div>
+                          <div id="inTurnFadingTextG_6" class="inTurnFadingTextG">N</div>
+                          <div id="inTurnFadingTextG_7" class="inTurnFadingTextG">G</div>
+                          <div id="inTurnFadingTextG_8" class="inTurnFadingTextG">.</div>
+                          <div id="inTurnFadingTextG_9" class="inTurnFadingTextG">.</div>
+                          <div id="inTurnFadingTextG_10" class="inTurnFadingTextG">.</div>
+                        </div>
+                      </div>
+                    </table>
+                  </div>
+                </div>
+                <br>
+                <br>
+                <div class="pagination-wrapper margin-top-10">
+                  <div class="table-go-page-entries">
+                      <label>Go page
+                          <mat-form-field class="width-auto" style="padding: 0px 10px 0px 6px;">
+                              <input matInput type="number" autocomplete="off" class="input-go-entries" min="1"
+                                  max="{{PagesArray.length}}" [(ngModel)]="GoToPage">
+                          </mat-form-field>
+                          <span class="go-search-entries  green-rgb-background" matTooltip="Go to Page"
+                              (click)="Pagination_Action(GoToPage)">GO</span>
+                      </label>
+                  </div>
+                  <div class="page-show-entires">
+                      <div class="txt-show-records" [innerHTML]="ShowingText"></div>
+                  </div>
+                  <div class="page-number">
+                      <ul class="pagination hidden-xs">
+                          <li>
+                              <a class="{{PagePrevious['Class']}}" (click)="Pagination_Action(PagePrevious['Value'])"
+                                  matTooltip="Previous">
+                                  <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                              </a>
+                          </li>
+                          <li *ngFor="let Page of PagesArray; let i=index" class="{{Page.Class}}"
+                              [ngClass]="{'active': Page.Active}" (click)="Pagination_Action(Page.Value)">
+                              <a>
+                                  <p>{{Page.Text}}</p>
+                              </a>
+                          </li>
+                          <li>
+                              <a class="{{PageNext['Class']}}" (click)="Pagination_Action(PageNext['Value'])"
+                                  matTooltip="Next">
+                                  <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                              </a>
+                          </li>
+                      </ul>
+                      <ul class="pagination visible-xs">
+                          <li><a>
+                                  <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                              </a></li>
+                          <li><a>
+                                  <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                              </a></li>
+                      </ul>
+                  </div>
+              </div>
+              </mat-tab>
+
+              <mat-tab label="Wallet">
+                <br>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-2">
+                      <div class="table-entries-and-sortby">
+                        <label>Limits
+                          <mat-form-field class="full-width tbl-limits" [floatLabel]="'never'" appearance="fill">
+                            <mat-select [(ngModel)]="LimitCount" (ngModelChange)="Pagination_Action(1)">
+                              <mat-option [value]="5">5</mat-option>
+                              <mat-option [value]="10">10</mat-option>
+                              <mat-option [value]="25">25</mat-option>
+                              <mat-option [value]="50">50</mat-option>
+                              <mat-option [value]="100">100</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row no-margin">
+                  <div class="table-responsive">
+                    <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                      <thead #TableHeaderSection>
+                        <tr>
+                          <th>S.No</th>
+                          <th *ngFor="let Header of WallHeaders;let i=index">
+                            <div class="column-title"> {{Header.Name}}
+
+                            </div>
+                          </th>
+
+                        </tr>
+                      </thead>
+                      <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i></div>
+                      <tbody #TableBodySection class="tbl-content">
+                        <ng-container >
+                          <tr class="odd" *ngFor="let wallet of wallt;let i=index">
+                            <td>{{ SerialNoAddOn+i+1}}</td>
+                            <td>{{wallet?.date}} </td>
+                            <td>{{wallet?.productname}}</td>
+                            <td>{{wallet?.quantity | number}}</td>
+                            <td>{{wallet?.description}}</td>
+                            <!-- <td>
+                           <span>Rs.</span>   {{CustomerDetails?.VilfreshMoney_Limit -
+                                (CustomerDetails?.VilfreshCredit_Limit -
+                                CustomerDetails?.AvailableCredit_Limit )}}
+                            </td> -->
+                            <td>{{wallet?.waltlmt}}</td>
+                            <td>{{wallet?.spent | number}}</td>
+
+                            <td><span>Rs. </span> {{wallet?.waltlmt - wallet?.spent}}</td>
+
+                          </tr>
+                          <div class="table-down-arrow"><i
+                              class="fa fa-arrow-circle-down animated infinite fadeInDown"></i></div>
+                        </ng-container>
+                        <tr *ngIf="CustomerDetails.length === 0">
+                          <td colspan="9"> No Records Found.... </td>
+                        </tr>
+                      </tbody>
+                      <div #TableLoaderSection class="tbl-loading-center">
+                        <div id="inTurnFadingTextG">
+                          <div id="inTurnFadingTextG_1" class="inTurnFadingTextG">L</div>
+                          <div id="inTurnFadingTextG_2" class="inTurnFadingTextG">O</div>
+                          <div id="inTurnFadingTextG_3" class="inTurnFadingTextG">A</div>
+                          <div id="inTurnFadingTextG_4" class="inTurnFadingTextG">D</div>
+                          <div id="inTurnFadingTextG_5" class="inTurnFadingTextG">I</div>
+                          <div id="inTurnFadingTextG_6" class="inTurnFadingTextG">N</div>
+                          <div id="inTurnFadingTextG_7" class="inTurnFadingTextG">G</div>
+                          <div id="inTurnFadingTextG_8" class="inTurnFadingTextG">.</div>
+                          <div id="inTurnFadingTextG_9" class="inTurnFadingTextG">.</div>
+                          <div id="inTurnFadingTextG_10" class="inTurnFadingTextG">.</div>
+                        </div>
+                      </div>
+                    </table>
+                  </div>
+                  
+                </div>
+                <br>
+                <br>
+                <div class="pagination-wrapper margin-top-10">
+                  <div class="table-go-page-entries">
+                      <label>Go page
+                          <mat-form-field class="width-auto" style="padding: 0px 10px 0px 6px;">
+                              <input matInput type="number" autocomplete="off" class="input-go-entries" min="1"
+                                  max="{{PagesArray.length}}" [(ngModel)]="GoToPage">
+                          </mat-form-field>
+                          <span class="go-search-entries  green-rgb-background" matTooltip="Go to Page"
+                              (click)="Pagination_Action(GoToPage)">GO</span>
+                      </label>
+                  </div>
+                  <div class="page-show-entires">
+                      <div class="txt-show-records" [innerHTML]="ShowingText"></div>
+                  </div>
+                  <div class="page-number">
+                      <ul class="pagination hidden-xs">
+                          <li>
+                              <a class="{{PagePrevious['Class']}}" (click)="Pagination_Action(PagePrevious['Value'])"
+                                  matTooltip="Previous">
+                                  <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                              </a>
+                          </li>
+                          <li *ngFor="let Page of PagesArray; let i=index" class="{{Page.Class}}"
+                              [ngClass]="{'active': Page.Active}" (click)="Pagination_Action(Page.Value)">
+                              <a>
+                                  <p>{{Page.Text}}</p>
+                              </a>
+                          </li>
+                          <li>
+                              <a class="{{PageNext['Class']}}" (click)="Pagination_Action(PageNext['Value'])"
+                                  matTooltip="Next">
+                                  <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                              </a>
+                          </li>
+                      </ul>
+                      <ul class="pagination visible-xs">
+                          <li><a>
+                                  <p><i class="fa fa-angle-double-left" aria-hidden="true"></i></p>
+                              </a></li>
+                          <li><a>
+                                  <p><i class="fa fa-angle-double-right" aria-hidden="true"></i></p>
+                              </a></li>
+                      </ul>
+                  </div>
+              </div>
+              </mat-tab>
+            </mat-tab-group>
+
+
+          </div>
+
+          <mat-divider></mat-divider>
+
+        </div>
+
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <div class="row">
+          <div class="col-sm-12">
+            <button  class="modal-confirm btns-modal-action fill-left-to-right" (click)="goback()">Go Back</button>
+
+          </div>
+        </div>
+        <br>
+
+      </div>
+    </div>
+  </div>
+</div>

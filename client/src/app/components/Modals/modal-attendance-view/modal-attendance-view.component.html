@@ -1,0 +1,69 @@
+<section>
+        <div class="modal-body">
+           <form>
+                 <div class="modal-header-title">
+                    <h5>Attendence Detail Info</h5> 
+                    <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                 </div>           
+                 <div class="container modal-content-body">
+                    <div class="col-sm-12">
+                       <div class="row no-margin">                     
+                          <div class="form-group form-group-sm col-md-12">
+                             <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl" style="line-height: 0;">Choose Month of Date :</label>
+                                <div class="col-sm-12 col-md-8">
+                                    <mat-form-field>
+                                          <input type="text" matInput [matDatepicker]="picker" [(ngModel)]="MonthFor" (click)="picker.open()" (dateInput)="Monthfilter()" [ngModelOptions]="{standalone: true}">
+                                          <mat-datepicker #picker panelClass="DisableDate" startView="year" (monthSelected)="chosenMonthHandler($event, picker); MonthChange()"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>                                   
+                             </div>
+                          </div>
+                       </div>    
+                       <div class="container-fluid">
+                          <div class="table-responsive">
+                             <table #TableSection class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                                <thead #TableHeaderSection>
+                                   <tr>
+                                      <th>S.No</th>
+                                      <th>
+                                         <div class="column-title"> 
+                                            Date                                                              
+                                         </div>
+                                      </th>
+                                      <th>
+                                         <div class="column-title"> 
+                                            Morning Session                                                              
+                                         </div>
+                                      </th> 
+                                      <th>
+                                        <div class="column-title"> 
+                                          Evening Session                                                              
+                                        </div>
+                                      </th>                                                                  
+                                   </tr>
+                                </thead>
+                                <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i> </div>
+                                <tbody #TableBodySection class="tbl-content">
+                                   <ng-container>
+                                      <tr class="odd" *ngFor="let Attendance of Attendance_List; let i=index">
+                                         <td>{{i+1}}</td>
+                                         <td> {{Attendance?.Date | date: 'd-MMM-y'}} </td>
+                                         <td *ngIf="Attendance?.Morning === true || Attendance?.Morning === false "> {{Attendance?.Morning === true ? 'Present' : 'Absent'}} </td>
+                                         <td *ngIf="Attendance?.Morning === null"> {{Attendance?.Morning === null ? '--' : '--'}} </td>
+                                         <td *ngIf="Attendance?.Evening === true || Attendance?.Evening === false "> {{Attendance?.Evening === true ? 'Present' : 'Absent'}} </td>
+                                         <td *ngIf="Attendance?.Evening === null"> {{Attendance?.Evening === null ? '--' : '--'}} </td>
+                                      </tr>
+                                   </ng-container>                                              
+                                </tbody>   
+                             </table>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="modal-actions">          
+                    <button type="submit" (click)="modalRef.hide()" class="modal-confirm btns-modal-action fill-left-to-right" aria-label=""> Close </button>
+                 </div>
+           </form>   
+        </div>
+     </section>

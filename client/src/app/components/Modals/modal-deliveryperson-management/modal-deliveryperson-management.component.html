@@ -1,0 +1,336 @@
+<section *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+    <div class="modal-body">
+        <form [formGroup]="DeliveryPersonForm" (ngSubmit)="onSubmit()">
+            <div class="modal-header-title">
+                <h5> {{Type}} DeliveryPerson Info</h5>
+                <span *ngIf="!Uploading " class="modal-container-close" (click)="modalRef.hide();"><i
+                        class="fa fa-times-circle" aria-hidden="true"></i></span>
+            </div>
+            <div class="container modal-content-body">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">DeliveryPerson
+                                    Name</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input matInput formControlName="DeliveryPerson_Name"
+                                            placeholder="DeliveryPerson Name" >
+                                            <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('DeliveryPerson_Name')"> </mat-error>
+                                        </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Mobile Number</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input matInput formControlName="Mobile_Number" placeholder="Mobile Number">
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Mobile_Number')"> </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Gender </label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <mat-select formControlName="Gender" placeholder="Select Gender">
+                                            <mat-option [value]="">Select Gender</mat-option>
+                                            <mat-option *ngFor="let Type of GenderTypes; let i=index"
+                                                [value]="Type.Key"> {{Type.Name}} </mat-option>
+                                        </mat-select>
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Gender')"> </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Email ID</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input matInput formControlName="Email" placeholder="Email ID">
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Email')"> </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Area</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input matInput formControlName="Area" placeholder="Area ">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Address</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <textarea formControlName="Address" matInput placeholder="Address"></textarea>
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Address')"> </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group col-lg-6 col-md-12">                            
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Delivery Line</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <mat-select formControlName="DeliveryLine" placeholder="Select Delivery Line">
+                                            <mat-option>Select Delivery Line</mat-option>
+                                            <mat-option *ngFor="let Type of DeliveryList; let i=index"
+                                                [value]="Type"> {{Type.Deliveryline_Name}} ({{Type.Session}}) </mat-option>
+                                        </mat-select>
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('DeliveryLine')"> </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-lg-5 col-md-12 col-form-label text-lg-right">Date Of Birth </label>
+                                <div class="col-lg-7 col-md-12">
+                                      <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                         <input formControlName="DateOf_Birth" (click)="DateOf_Birth.open()" matInput [matDatepicker]="DateOf_Birth" (keypress)="NotAllow()" (keydown)="ClearInput($event)" placeholder="Date Of Birth ">
+                                          <mat-icon matSuffix >event</mat-icon>
+                                         <mat-datepicker touchUi #DateOf_Birth></mat-datepicker>
+                                         <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('DateOf_Birth')"> </mat-error>
+                                      </mat-form-field>
+                                   </div>
+                             </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Alternate Mobile No</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input formControlName="Alternate_Mobile_No" matInput placeholder="Alternate Mobile No">                                        
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Driving License No</label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <input formControlName="Driving_License_No" matInput placeholder="Driving License No"> 
+                                        <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Driving_License_No')"> </mat-error>                                       
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-lg-5 col-md-12 col-form-label text-lg-right">Driving License ExpiryDate </label>
+                                <div class="col-lg-7 col-md-12">
+                                      <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                         <input formControlName="Driving_License_ExpiryDate" (click)="Driving_License_ExpiryDate.open()" matInput [matDatepicker]="Driving_License_ExpiryDate" (keypress)="NotAllow1()" (keydown)="ClearInput1($event)" placeholder="Driving License ExpiryDate">
+                                          <mat-icon matSuffix >event</mat-icon>
+                                         <mat-datepicker touchUi #Driving_License_ExpiryDate></mat-datepicker>
+                                         <mat-error class="mat-error-full margin-top0" [innerHTML]="GetFormControlErrorMessage('Driving_License_ExpiryDate')"> </mat-error> 
+                                      </mat-form-field>
+                                   </div>
+                             </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-12">
+                            <div class="row">
+                                <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Marital Status </label>
+                                <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                        <mat-select formControlName="Marital_Status" placeholder="Select Marital Status">
+                                            <mat-option [value]="">Select Marital Status </mat-option>
+                                            <mat-option *ngFor="let Type of Marital_Statuses; let i=index"
+                                                [value]="Type.Key"> {{Type.Name}} </mat-option>
+                                        </mat-select>                                        
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" [disabled]="DeliveryPersonForm.status !== 'VALID'|| Uploading"
+                    class="modal-confirm btns-modal-action fill-left-to-right"
+                    [ngClass]="{'disabled': DeliveryPersonForm.status !== 'VALID'|| Uploading}">
+                    <span *ngIf="Type === 'Create' && !Uploading">Submit</span>
+                    <span *ngIf="Type === 'Edit' && !Uploading">Update</span>
+                    <span *ngIf="Uploading"> Loading... </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+
+<section *ngIf="Type && ( Type === 'View')">
+    <div class="modal-body">
+        <form>
+            <div class="modal-header-title">
+                <h5> Delivery Person Details</h5>
+                <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle"
+                        aria-hidden="true"></i></span>
+            </div>
+            <div class="container modal-content-body">
+                <div class="col-sm-12">
+                    <div class="row no-margin">
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">DeliveryPerson
+                                    Name:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.DeliveryPerson_Name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Mobile
+                                    Number:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Mobile_Number }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Email ID:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Email }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Gender:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Gender }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Delivery Line
+                                    Name:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.DeliveryLine?.Deliveryline_Name | titlecase}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Area :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Area }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Address:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Address}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Alternate Mobile No:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Alternate_Mobile_No}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Date Of Birth:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.DateOf_Birth | date: 'd-MMM-y' }}
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Marital Status:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl" *ngIf="DeliveryPerson?.Marital_Status === true">
+                                    Married
+                                </div>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl" *ngIf="DeliveryPerson?.Marital_Status === false">
+                                    Single
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Driving License No:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Driving_License_No }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Driving License ExpiryDate:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Driving_License_ExpiryDate | date: 'd-MMM-y' }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Latitude:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Latitude}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl"> Longitude:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.Longitude}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Status:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.DeliveryPerson_Status  }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Created Date:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{DeliveryPerson?.createdAt | date: 'd-MMM-y, HH:mm' }}
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" (click)="modalRef.hide()"
+                    class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+                    Close
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

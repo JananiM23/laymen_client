@@ -1,0 +1,98 @@
+<section *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+    <div class="modal-body">
+       <form [formGroup]="SupportForm" (ngSubmit)="onSubmit()">
+       <div class="modal-header-title">
+          <h5> {{Type}} Support Title Info</h5>
+          <span *ngIf="!Uploading" class="modal-container-close" (click)="modalRef.hide();"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+       </div>
+       <div class="container modal-content-body">
+          <div class="col-sm-12">
+             <div class="row">  
+                  <div class="form-group col-sm-10">
+                       <div class="row">
+                           <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">SupportTitle Name</label>
+                           <div class="col-md-12 col-lg-8">
+                                <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                      <input matInput formControlName="Support_Title" placeholder="Support Title Name" autocomplete="off">
+                                      <mat-error *ngIf="SupportForm.controls['Support_Title'].errors && SupportForm.controls['Support_Title'].touched">
+                                       <span *ngIf="SupportForm.controls['Support_Title'].errors.required">Support Title Name is required</span>
+                                       <span *ngIf="SupportForm.controls['Support_Title'].errors.AlphaNumericUnderscoreHyphenDotError">'Please Enter Only Alphabets, Space and Hyphen</span>
+                                       <ng-container *ngIf="!SupportForm.controls['Support_Title'].errors.required">
+                                          <span *ngIf="SupportForm.controls['Support_Title'].errors.Support_Title_NotAvailable">Support Title Name Already Exist</span>                                       
+                                       </ng-container>
+                                       </mat-error>
+                                </mat-form-field>
+                           </div>
+                       </div>
+                   </div>                                                       
+             </div>
+          </div>   
+       </div>
+       <div class="modal-actions">
+          <button type="submit" [disabled]="SupportForm.status !== 'VALID'|| Uploading" class="modal-confirm btns-modal-action fill-left-to-right" [ngClass]="{'disabled': SupportForm.status !== 'VALID'|| Uploading}">
+             <span *ngIf="Type === 'Create' && !Uploading">Submit</span>
+             <span *ngIf="Type === 'Edit' && !Uploading">Update</span>
+             <span *ngIf="Uploading"> Loading... </span>
+          </button>
+       </div>
+       </form>
+    </div>
+ </section>
+
+ <section *ngIf="Type === 'View'">
+    <div class="modal-body">
+        <form>
+            <div class="modal-header-title">
+                <h5> Support Title Info</h5>
+                <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+            </div>           
+            <div class="container modal-content-body">
+                    <div class="col-sm-12">
+                        <div class="row no-margin">
+                            <div class="form-group col-md-12">
+                                <div class="row">
+                                    <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Support Title Name:</label>
+                                    <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                        {{Info?.Support_Title}}
+                                    </div>
+                                </div>
+                            </div>        
+                            <div class="form-group col-md-12">
+                                <div class="row">
+                                    <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Support Status:</label>
+                                    <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                        <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                            {{Info?.Support_Status}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                                                
+                           <div class="form-group col-md-12">
+                                <div class="row">
+                                    <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">
+                                        Status:</label>
+                                    <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                        {{Info?.Active_Status ? 'Active' : 'Inactive' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="row">
+                                    <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Date :</label>
+                                    <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                        {{Info?.updatedAt | date: 'd-MMM-y' }}                                    
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            <div class="modal-actions">          
+                <button type="submit" (click)="modalRef.hide()" class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+                Close
+                </button>
+            </div>
+        </form>   
+    </div>
+</section>

@@ -1,0 +1,106 @@
+<section>
+   <div class="modal-body">
+       <form>
+           <div class="modal-header-title">
+               <h5> Customer Referrals</h5>
+               <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+           </div>
+           <div class="container modal-content-body">
+               <div class="row">
+                   <div class="col-sm-6">
+                       <div class="form-group ">
+                           <div class="row no-margin">
+                               <label class="col-sm-12 col-md-6 text-lg-right lbl">Customer Name :</label>
+                               <div class="col-sm-12 col-md-6 lbl">
+                                   {{CustomerReferralDetails?.Customer_Name }}
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group ">
+                           <div class="row no-margin">
+                               <label class="col-sm-12 col-md-6 text-lg-right lbl">Mobile :</label>
+                               <div class="col-sm-12 col-md-6 lbl">
+                                   {{CustomerReferralDetails?.Mobile_Number }}
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group">
+                        <div class="row no-margin">
+                            <label class="col-sm-12 col-md-6 text-lg-right lbl">Total Referrals :</label>
+                            <div class="col-sm-12 col-md-6 lbl">
+                                {{CustomerReferralDetails?.TotalReferrals }}
+                            </div>
+                        </div>
+                     </div>
+                   </div>
+
+                   <div class="col-sm-6">
+                       <div class="form-group">
+                           <div class="row no-margin">
+                               <label class="col-sm-12 col-md-6 text-lg-right lbl">New Referrals :</label>
+                               <div class="col-sm-12 col-md-6 lbl">
+                                   {{CustomerReferralDetails?.NewReferrals }}
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group ">
+                           <div class="row no-margin">
+                               <label class="col-sm-12 col-md-6 text-lg-right lbl">Pending Referrals :</label>
+                               <div class="col-sm-12 col-md-6 lbl">
+                                   {{CustomerReferralDetails?.PendingReferrals }}
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group">
+                           <div class="row no-margin">
+                              <label class="col-sm-12 col-md-6 text-lg-right lbl">Successful Referrals :</label>
+                              <div class="col-sm-12 col-md-6 lbl">
+                                 {{ CustomerReferralDetails?.SuccessReferrals}}
+                              </div>
+                           </div>
+                     </div>
+                   </div>
+               </div>
+
+               <table class="tbl-vilFresh" cellpadding="0" cellspacing="0" border="0">
+                   <thead #TableHeaderSection>
+                       <tr>
+                           <th>S.No</th>
+                           <th>
+                               <div class="column-title"> Customer </div>
+                           </th>
+                           <th>
+                               <div class="column-title"> Mobile </div>
+                           </th>
+                           <th>
+                               <div class="column-title"> Created date </div>
+                           </th>
+                           <th>
+                               <div class="column-title"> Referral Status </div>
+                           </th>
+                       </tr>
+                   </thead>
+                   <div class="table-up-arrow"><i class="fa fa-arrow-circle-up animated infinite fadeInUp"></i> </div>
+                   <tbody #TableBodySection class="tbl-content">
+                       <ng-container *ngIf="CustomerReferralDetails?.NominatedList.length > 0">
+                           <tr class="odd" *ngFor="let Nominated of CustomerReferralDetails?.NominatedList let i=index">
+                               <td> {{i+1}} </td>
+                               <td> {{Nominated?.Customer_Name}} </td>
+                               <td> {{Nominated?.Mobile_Number}} </td>
+                               <td> {{Nominated?.createdAt | date: 'd-MMM-y' }} </td>
+                               <td *ngIf="!Nominated.RewardCompleted"> Pending </td>
+                               <td *ngIf="Nominated.RewardCompleted"> Success </td>
+                           </tr>
+                       </ng-container>
+                   </tbody>
+               </table>
+           </div>
+           <div class="modal-actions">
+               <button type="submit" (click)="modalRef.hide()"
+                   class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+                   Close
+               </button>
+           </div>
+       </form>
+   </div>
+</section>

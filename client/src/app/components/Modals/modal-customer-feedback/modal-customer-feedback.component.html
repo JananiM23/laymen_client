@@ -1,0 +1,81 @@
+
+ <section *ngIf="Type && ( Type === 'View')">
+    <div class="modal-body">
+        <form>
+            <div class="modal-header-title">
+                <h5> Customer Support Details</h5>
+                <span class="modal-container-close" (click)="modalRef.hide()"><i class="fa fa-times-circle"
+                        aria-hidden="true"></i></span>
+            </div>
+            <div class="container modal-content-body">
+                <div class="col-sm-12">
+                    <div class="row no-margin">
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Customer
+                                    Name:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{FeedBackDetails?.CustomerId?.Customer_Name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Mobile Number
+                                    :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{FeedBackDetails?.CustomerId?.Mobile_Number}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Rating
+                                    :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{FeedBackDetails?.Rating}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Message
+                                    :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                  {{FeedBackDetails?.Message}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">APP Version
+                                    :</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                  {{FeedBackDetails?.APP_Version}}
+                                </div>
+                            </div>
+                        </div>
+ 
+ 
+ 
+                        <div class="form-group form-group-sm col-md-12">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-4 col-form-label text-lg-right lbl">Created Date:</label>
+                                <div class="col-sm-12 col-md-8 col-form-label  lbl">
+                                    {{FeedBackDetails?.createdAt | date: 'd-MMM-y, HH:mm' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" (click)="modalRef.hide()"
+                    class="modal-confirm btns-modal-action fill-left-to-right" aria-label="">
+                    Close
+                </button>
+            </div>
+        </form>
+    </div>
+ </section>
+ 

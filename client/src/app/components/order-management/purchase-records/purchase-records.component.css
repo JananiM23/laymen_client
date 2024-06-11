@@ -1,0 +1,11 @@
+span.text-date-time {
+    font-size: 14px;
+    color: #76b744;
+}
+.btn-genrate {
+    background: linear-gradient(to top, rgba(44, 95, 49, 1.0), rgba(140, 189, 62, 1.0));
+    color: #fff !important;
+}
+.btn-genrate:before {
+    border: none !important;
+}

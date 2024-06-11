@@ -1,0 +1,52 @@
+<section *ngIf="Type && ( Type === 'Create' || Type === 'Edit')">
+        <div class="modal-body">
+           <form [formGroup]="DeliveryForm" (ngSubmit)="onSubmit()">
+           <div class="modal-header-title">
+              <h5> {{Type}} Delivery Line Info</h5>
+              <span *ngIf="!Uploading" class="modal-container-close" (click)="modalRef.hide();"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+           </div>
+           <div class="container modal-content-body">
+              <div class="col-sm-12">
+                 <div class="row">  
+                      <div class="form-group col-sm-10">
+                           <div class="row">
+                               <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Deliveryline Name</label>
+                               <div class="col-md-12 col-lg-8">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                          <input matInput formControlName="Deliveryline_Name" placeholder="Delivery Line Name" autocomplete="off">
+                                          <mat-error *ngIf="DeliveryForm.controls['Deliveryline_Name'].errors && DeliveryForm.controls['Deliveryline_Name'].touched">
+                                           <span *ngIf="DeliveryForm.controls['Deliveryline_Name'].errors.required">Deliveryline Name is required</span>
+                                           <span *ngIf="DeliveryForm.controls['Deliveryline_Name'].errors.AlphaNumericUnderscoreHyphenDotError">'Please Enter Only Alphabets, Space and Hyphen</span>
+                                           <ng-container *ngIf="!DeliveryForm.controls['Deliveryline_Name'].errors.required">
+                                              <span *ngIf="DeliveryForm.controls['Deliveryline_Name'].errors.Deliveryline_Name_NotAvailable">Deliveryline Already Exist</span>                                       
+                                           </ng-container>
+                                           </mat-error>
+                                    </mat-form-field>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group col-sm-10">
+                           <div class="row">
+                               <label class="col-md-12 col-lg-4 col-form-label text-lg-right ">Delivery Session</label>
+                               <div class="col-md-12 col-lg-7">
+                                    <mat-radio-group formControlName="Session">
+                                       <mat-radio-button style="margin-right: 25px;" value="Morning">Morning</mat-radio-button>
+                                       <mat-radio-button style="margin-right: 25px;" value="Evening">Evening</mat-radio-button>
+                                       <mat-radio-button value="Both">Both</mat-radio-button>
+                                     </mat-radio-group>              
+                               </div>
+                           </div>
+                       </div> 
+                 </div>
+              </div>   
+           </div>
+           <div class="modal-actions">
+              <button type="submit" [disabled]="DeliveryForm.status !== 'VALID'|| Uploading" class="modal-confirm btns-modal-action fill-left-to-right" [ngClass]="{'disabled': DeliveryForm.status !== 'VALID'|| Uploading}">
+                 <span *ngIf="Type === 'Create' && !Uploading">Submit</span>
+                 <span *ngIf="Type === 'Edit' && !Uploading">Update</span>
+                 <span *ngIf="Uploading"> Loading... </span>
+              </button>
+           </div>
+           </form>
+        </div>
+     </section>

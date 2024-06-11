@@ -1,0 +1,462 @@
+
+<section>
+   <div class="tabpane-title">
+      <h5>Customer {{PageType}} </h5>
+   </div>
+   <div class="card box-shadow">
+      <div class="col-md-12 tab-pane-container no-padding">
+            <div class="portlet-tab-panelbody" *ngIf="PageLoaded">
+               <form class="form-horizontal" [formGroup]="CustomerManageForm">
+                   <!-- Customer Details -->
+                     <div class="hospital-details">                       
+                        <div class="container-fluid">
+                           <label class="text-left side-field-title"><b>Basic Details</b></label>
+                           <div class="row">
+                             <div  class="form-group col-md-12 col-lg-6">
+                               <div class="row">
+                                   <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Customer Name </label>
+                                    <div class="col-lg-7 col-md-12">
+                                       <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                          <input  matInput formControlName="Customer_Name" placeholder="Customer Name" autocomplete="off"> 
+                                         <mat-error [innerHTML]="GetFormControlErrorMessage('Customer_Name')"></mat-error>
+                                       </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                      <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Email</label>
+                                      <div class="col-lg-7 col-md-12">
+                                         <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                             <input  matInput formControlName="Email" placeholder="Email"  autocomplete="off">   
+                                            <mat-error [innerHTML]="GetFormControlErrorMessage('Email')"></mat-error>
+                                         </mat-form-field>
+                                      </div>
+                                 </div>
+                                 <div class="row">
+                                     <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Mobile Number</label>
+                                     <div class="col-lg-7 col-md-12">
+                                        <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                            <input  matInput formControlName="Mobile_Number" placeholder="Mobile Number"  autocomplete="off">
+                                            <mat-error [innerHTML]="GetFormControlErrorMessage('Mobile_Number')"></mat-error>
+                                        </mat-form-field>
+                                     </div>
+                                </div>
+                                 <div class="row">
+                                    <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Customer Address</label>
+                                    <div class="col-lg-7 col-md-12">
+                                       <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                          <textarea matInput formControlName="Address" placeholder="Customer Address"></textarea>
+                                          <mat-error [innerHTML]="GetFormControlErrorMessage('Address')"></mat-error>
+                                       </mat-form-field>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Pincode</label>
+                                    <div class="col-lg-7 col-md-12">
+                                       <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                           <input matInput formControlName="Pincode" placeholder="Pincode" autocomplete="off">
+                                           <mat-error [innerHTML]="GetFormControlErrorMessage('Pincode')"></mat-error>
+                                       </mat-form-field>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Latitude</label>
+                                    <div class="col-lg-7 col-md-12">
+                                       <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                          <input formControlName="Latitude" matInput placeholder="Latitude">
+                                          <mat-error [innerHTML]="GetFormControlErrorMessage('Latitude')"></mat-error>
+                                       </mat-form-field>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Longitude</label>
+                                    <div class="col-lg-7 col-md-12">
+                                       <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                          <input formControlName="Longitude" matInput placeholder="Longitude">
+                                          <mat-error [innerHTML]="GetFormControlErrorMessage('Longitude')"></mat-error>
+                                       </mat-form-field>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required"> Ethnicity </label>
+                                    <div class="col-lg-7 col-md-12">
+                                       <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                          <mat-select formControlName="City" placeholder="Select City">
+                                             <mat-option *ngFor="let city of CityList; let i=index" [value]="city">{{city}}</mat-option>
+                                          </mat-select>
+                                          <mat-error [innerHTML]="GetFormControlErrorMessage('City')"></mat-error>
+                                       </mat-form-field>
+                                    </div>
+                                 </div>
+                
+                                 <div class="row">
+                                   <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Gender</label>
+                                   <div class="col-lg-7 col-md-12">                                       
+                                      <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                         <mat-select formControlName="Gender" placeholder="Select Gender">
+                                            <mat-option>Select Gender</mat-option>
+                                            <mat-option *ngFor="let Gender of GenderTypes; let i=index" [value]="Gender.Key">{{Gender.Name}}</mat-option>
+                                         </mat-select>
+                                         <mat-error [innerHTML]="GetFormControlErrorMessage('Gender')"></mat-error>
+                                      </mat-form-field>
+                                   </div>
+                                </div> 
+                                <div class="row">
+                                 <label class="col-lg-5 col-md-12 col-form-label text-lg-right ">What You Like</label>
+                                 <div class="col-lg-7 col-md-12">                                       
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                       <mat-select formControlName="What_You_Like" placeholder="Select Your Like">
+                                          <mat-option>Select Your Like </mat-option>
+                                          <mat-option *ngFor="let Like of What_You_Like; let i=index" [value]="Like.Key">{{Like.Name}}</mat-option>
+                                       </mat-select>
+                                    </mat-form-field>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Delivery Line</label>
+                                    <div class="col-lg-7 col-md-12"> 
+                                       <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                          <mat-select formControlName="Delivery_Line" placeholder="Select Delivery Line">
+                                             <mat-option>Select Delivery Line</mat-option>
+                                             <mat-option *ngFor="let Type of DeliveryList; let i=index" [value]="Type._id"> {{Type.Deliveryline_Name}} </mat-option>
+                                          </mat-select>
+                                          <mat-error [innerHTML]="GetFormControlErrorMessage('Delivery_Line')"></mat-error>
+                                       </mat-form-field>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Delivery Line Queue</label>
+                                 <div class="col-lg-7 col-md-12">
+                                    <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                       <input formControlName="Delivery_Line_Queue" matInput placeholder="Delivery Line Queue">
+                                       <mat-error [innerHTML]="GetFormControlErrorMessage('Delivery_Line_Queue')"></mat-error>
+                                    </mat-form-field>
+                                 </div>
+                              </div>
+                             </div>                           
+                             <div class="form-group col-md-12 col-lg-6">
+                                <div class="map-canvas" *ngIf="CustomerDetails !== undefined || PageType === 'Create'">
+                                   <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [mapTypeControl]="true" [fullscreenControl]="true" [fitBounds]="true">
+                                      <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerDragEvent($event)" [agmFitBounds]="true"></agm-marker>
+                                   </agm-map>
+                                </div>  
+                             </div>
+                             <div class="col-md-12">
+                                 <label class="text-left side-field-title"><b>Family Members</b></label>
+                                <div class="row">
+                                    <div class="form-group col-md-12 col-lg-6">
+                                          <ng-container>
+                                                <div class="row">
+                                                   <label class="col-lg-5 col-md-12 col-form-label text-lg-right">Male Count </label>
+                                                      <div class="col-lg-7 col-md-12">
+                                                         <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                            <input  matInput formControlName="Male_Count" placeholder="Male Count"  autocomplete="off">      
+                                                         </mat-form-field>
+                                                      </div>
+                                                </div>
+                                                <div class="row">
+                                                   <label class="col-lg-5 col-md-12 col-form-label text-lg-right">Female Count </label>
+                                                   <div class="col-lg-7 col-md-12">
+                                                      <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                         <input  matInput formControlName="Female_Count" placeholder="Male Count"  autocomplete="off">      
+                                                      </mat-form-field>
+                                                   </div>
+                                                </div> 
+                                                <div class="row">
+                                                   <label class="col-lg-5 col-md-12 col-form-label text-lg-right">Children Count </label>
+                                                   <div class="col-lg-7 col-md-12">
+                                                      <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                         <input  matInput formControlName="Children_Count" placeholder="Children Count"  autocomplete="off">      
+                                                      </mat-form-field>
+                                                   </div>
+                                                </div> 
+                                          </ng-container>
+                                      </div>      
+                                      <div class="form-group col-md-12 col-lg-6">
+                                          <ng-container>
+                                                <div class="row">
+                                                   <label class="col-lg-5 col-md-12 col-form-label text-lg-right">Infants Count </label>
+                                                   <div class="col-lg-7 col-md-12">
+                                                      <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                         <input  matInput formControlName="Infants_Count" placeholder="Infants Count "  autocomplete="off">      
+                                                      </mat-form-field>
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <label class="col-lg-5 col-md-12 col-form-label text-lg-right">Senior Citizen </label>
+                                                   <div class="col-lg-7 col-md-12">
+                                                      <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                         <input  matInput formControlName="Senior_Citizen" placeholder="Senior Citizen "  autocomplete="off">      
+                                                      </mat-form-field>
+                                                   </div>
+                                                </div>
+                                          </ng-container>
+                                    </div>
+                                </div>
+                             </div>
+                             
+                            </div>
+                       </div>
+                       <br>
+
+                 <!-- Customer Requesting Details -->
+                  <!-- <div class="tabpane-title">
+                     <h5>Customer Requesting Details</h5>
+                  </div> -->
+                     <div class="container-fluid">     
+                        <div class="row">
+
+                           <!-- Sample Details start -->
+                     <div class="form-group col-md-12 col-lg-6"  *ngIf="PageType === 'Create' || (PageType === 'Edit' && (CustomerDetails.Customer_Status === 'Registration_completed' || CustomerDetails.Customer_Status === 'Sample_Pending' || CustomerDetails.Customer_Status === 'Sample_Approved' || CustomerDetails.Customer_Status === 'Sample_OnHold' || CustomerDetails.Customer_Status === 'Sample_Rejected' || CustomerDetails.Customer_Status === 'Subscription_Activated' || CustomerDetails.Customer_Status === 'Approved') )">
+                           <!-- <div class="form-group col-md-12 col-lg-6"  *ngIf="PageType === 'Create' || (PageType === 'Edit' && CustomerDetails?.Register_From === 'APP' && (CustomerDetails.Customer_Status === 'Sample_Pending' || CustomerDetails.Customer_Status === 'Sample_Approved' || CustomerDetails.Customer_Status === 'Sample_OnHold' || CustomerDetails.Customer_Status === 'Sample_Rejected') )"> -->
+                              <label class="col-md-12 text-left side-field-title"><b>Sample Details</b></label>
+                              <div class="col-md-12">
+                                 <ng-container >
+                                    <div class="row form-group">
+                                       <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required"> Sample </label>
+                                       <div class="col-lg-7 col-md-12">
+                                          <div class="YesOrNoButton" btnRadioGroup formControlName="Sample" (click)="SampleChange()">
+                                             <label class="hbtn hb-fill-right" btnRadio="Yes" tabindex="0" role="button"> Yes </label>
+                                             <label class=" hbtn hb-fill-left" btnRadio="No" tabindex="0" role="button"> No </label>
+                                          </div>
+                                          <mat-error [innerHTML]="GetFormControlErrorMessage('Sample')"></mat-error>
+                                       </div>
+                                    </div>
+                                    <ng-container *ngIf="CustomerManageForm.controls['Sample'].value === 'Yes'">
+                                       <div class="row">
+                                             <label class="col-lg-5 col-md-12 col-form-label text-lg-right ">Choose Session</label>
+                                             <div class="col-lg-7 col-md-12">                                       
+                                                <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                   <mat-select formControlName="Choose_The_Session" placeholder="Select Your Session">
+                                                      <mat-option>Select Your Session </mat-option>
+                                                      <mat-option *ngFor="let Session of Choose_The_Session; let i=index" [value]="Session.Key">{{Session.Name}}</mat-option>
+                                                   </mat-select>
+                                                </mat-form-field>
+                                             </div>
+                                       </div>
+                                       <div class="row">
+                                          <label class="col-lg-5 col-md-12 col-form-label text-lg-right">Choose Sample Date </label>
+                                          <div class="col-lg-7 col-md-12">
+                                                <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                   <input formControlName="Choose_The_Sample_Date" (click)="Choose_The_Sample_Date.open()" matInput [matDatepicker]="Choose_The_Sample_Date" (keypress)="NotAllow()" (keydown)="ClearInput($event)" placeholder="Sample Date ">
+                                                   <!-- <mat-icon (click)="Date.open()" matSuffix >event</mat-icon> -->
+                                                   <mat-icon matSuffix >event</mat-icon>
+                                                   <mat-datepicker touchUi #Choose_The_Sample_Date></mat-datepicker>
+                                                </mat-form-field>
+                                             </div>
+                                       </div>
+                                    </ng-container>
+                              </ng-container> 
+                              </div>
+                           </div>
+                           <!-- Sample Details end -->
+
+                           <!-- Special Day start -->
+                           <div class="form-group col-md-12 col-lg-6">
+                              <div class="col-md-12">
+                                 <label class="text-left side-field-title"><b>Special Day</b></label>
+                                    <!-- Special Date Array Duplication -->
+                                    <div class="row form-group text-right">
+                                       <div class="col-lg-12 col-md-12 col-form-label text-left"> 
+                                          <div class="col-lg-12 col-md-12">
+                                             <span class="btn-add-plus" (click)="addSpecialItem()" ><i class="fa fa-plus"></i></span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <ng-container formArrayName="Special_Date">
+                                       <div *ngFor="let Special_Date of GetFormArray('Special_Date'); let i=index" [formGroupName]="i">
+                                          <div class="row">
+                                             <div class="col-md-5">
+                                                <div class="row">
+                                                   <label class="col-lg-12 col-md-12 col-form-label">Special Day</label>
+                                                   <div class="col-lg-12 col-md-12">
+                                                      <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                         <input matInput formControlName="Name" placeholder="Special Day Name"  autocomplete="off">      
+                                                      </mat-form-field>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-5"> 
+                                                <div class="row">
+                                                   <label class="col-lg-12 col-md-12 col-form-label">Special Date</label>
+                                                   <div class="col-lg-12 col-md-12">
+                                                      <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                         <input formControlName="Special_Date" (click)="SpecialDate.open()"  matInput [matDatepicker]="SpecialDate" (keypress)="NotAllow()" (keydown)="ClearInput($event)" placeholder="Speical Date ">
+                                                         <mat-icon matSuffix >event</mat-icon>
+                                                         <mat-datepicker touchUi #SpecialDate></mat-datepicker>
+                                                      </mat-form-field>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-2 spl-day-remove-button text-left">
+                                                <span class="btn-remove-minus" (click)="removeSpecialItem(i)"><i class="fa fa-minus"></i></span>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </ng-container> 
+                                </div>
+                           </div>
+                           <!-- Special Day end -->
+
+                           <!-- Subscription Details start -->
+                           <!-- *ngIf="PageType === 'Create' || ( CustomerDetails?.Register_From === 'APP' || CustomerDetails?.Register_From === 'Web' && CustomerDetails.Customer_Status !== 'Sample_Pending' && CustomerDetails.Customer_Status !== 'Sample_Approved' && CustomerDetails.Customer_Status !== 'Sample_OnHold' && CustomerDetails.Customer_Status !== 'Sample_Rejected' )" -->
+                           <ng-container>
+                              <div class="form-group col-md-12">
+                                 <label class="text-left side-field-title"><b>Subscription Details</b></label>
+                                 <div class="col-md-6 form-group">
+                                    <div class="row">
+                                       <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Morning Subscription </label>
+                                       <div class="col-lg-7 col-md-12">
+                                          <div class="YesOrNoButton" [ngClass]="{'disabled': CustomerManageForm.get('Morning_Subscription').disabled}" btnRadioGroup formControlName="Morning_Subscription">
+                                             <label class="hbtn hb-fill-right" (click)="SetMorningYesOrNo('Yes')" btnRadio="Yes" tabindex="0" role="button"> Yes </label>
+                                             <label class="hbtn hb-fill-left" (click)="SetMorningYesOrNo('No')" btnRadio="No" tabindex="0" role="button"> No </label>
+                                          </div>
+                                          <mat-error [innerHTML]="GetFormControlErrorMessage('Morning_Subscription')"></mat-error>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="form-group col-md-12 col-lg-8">
+                                    <div class="row form-group">
+                                       <ng-container *ngIf="(PageType === 'Create' && CustomerManageForm.controls['Morning_Subscription'].value === 'Yes') ||(PageType === 'Edit' &&  CustomerManageForm.controls['Morning_Subscription'].value === 'Yes' && (CustomerDetails?.Register_From === 'Web' || CustomerDetails?.Register_From === 'APP')) ">
+                                          <div class="col-md-12 text-center margin-top-10">
+                                             <!-- Subscription Array Duplication -->
+                                             <!-- <div *ngIf="(GetFormArray('Morning').length < 2 && PageType === 'Create') || (PageType === 'Edit' && GetFormArray('Morning').length < 2)" class="row form-group">
+                                                <div class="col-md-12" style="text-align: right;" >
+                                                   <div class="col-md-12" style="margin-left: -70px;">
+                                                      <span class="btn-add-plus" (click)="addMorningItem()" ><i class="fa fa-plus"></i></span>
+                                                   </div>
+                                                </div>                                    
+                                             </div> -->
+      
+                                             <ng-container formArrayName="Morning">
+                                                <div *ngFor="let Morning of GetFormArray('Morning'); let i=index" [formGroupName]="i" class="col-lg-12">
+                                                   <div class="row form-group">
+                                                      <div class="col-md-4">
+                                                         <div class="row">
+                                                            <!-- <label class="col-lg-5 col-md-9 col-form-label text-lg-right">Milk Type</label> -->
+                                                            <div class="col-md-12">
+                                                               <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                                  <mat-select formControlName="ProductId" placeholder="Select Milk Type" >
+                                                                     <mat-option *ngFor="let Type_of_Milk of Type_of_MilkMorning; let i=index" [value]="Type_of_Milk.ProductId"> {{Type_of_Milk.Type}} </mat-option>
+                                                                  </mat-select>
+                                                                  <mat-error [innerHTML]="GetFormControlArrayErrorMessage('Morning', i, 'ProductId')"></mat-error>
+                                                            </mat-form-field>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                      <div class="col-md-4"> 
+                                                         <div class="row">
+                                                            <!-- <label class="col-lg-5 col-md-9 col-form-label text-lg-right">Liter</label> -->
+                                                            <div class="col-md-12">   
+                                                               <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                                     <mat-select formControlName="Liter" placeholder="Liter">
+                                                                        <mat-option *ngFor="let Liter of Liter; let i=index" [value]="Liter.Key"> {{Liter.Name}} </mat-option>
+                                                                     </mat-select>
+                                                                     <mat-error [innerHTML]="GetFormControlArrayErrorMessage('Morning', i, 'Liter')"></mat-error>
+                                                               </mat-form-field>
+                                                            </div>
+                                                         </div> 
+                                                      </div>                                                    
+                                                      <!-- <div class="col-md-1 spl-day-remove-button text-right"  *ngIf="PageType === 'Create' || (PageType === 'Edit' && CustomerDetails.Register_From === 'Web') ">
+                                                         <span  class="btn-remove-minus" (click)="removeMorningItem(i)"><i class="fa fa-minus"></i></span>
+                                                      </div> -->
+                                                   </div>
+                                                </div>
+                                             </ng-container> 
+                                       </div>
+                                       </ng-container>
+                                    </div>
+                                 </div>
+
+
+                                 <div class="col-md-6 form-group">
+                                    <div class="row">
+                                       <label class="col-lg-5 col-md-12 col-form-label text-lg-right lbl-required">Evening Subscription </label>
+                                       <div class="col-lg-7 col-md-12">
+                                          <div class="YesOrNoButton"  [ngClass]="{'disabled': CustomerManageForm.get('Evening_Subscription').disabled}" btnRadioGroup formControlName="Evening_Subscription">
+                                             <label class="hbtn hb-fill-right" (click)="SetEveningYesOrNo('Yes')" btnRadio="Yes" tabindex="0" role="button"> Yes </label>
+                                             <label class=" hbtn hb-fill-left" (click)="SetEveningYesOrNo('No')" btnRadio="No" tabindex="0" role="button"> No </label>
+                                          </div>
+                                          <mat-error [innerHTML]="GetFormControlErrorMessage('Evening_Subscription')"></mat-error>
+
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-12 col-lg-8">
+                                    <div class="row form-group">
+                                       <ng-container *ngIf="(PageType === 'Create' && CustomerManageForm.controls['Evening_Subscription'].value === 'Yes') || (PageType === 'Edit' && CustomerManageForm.controls['Evening_Subscription'].value === 'Yes' && (CustomerDetails?.Register_From === 'Web' || CustomerDetails?.Register_From === 'APP'))">
+                                          <div class="col-md-12 text-center">
+                                             <!-- Evening Array Duplication -->
+                                             <!-- <div *ngIf="GetFormArray('Evening').length < 2  && PageType === 'Create' || (PageType === 'Edit' && GetFormArray('Evening').length < 2 )" class="row form-group">
+                                                <div class="col-md-12" style="text-align: right;">
+                                                   <div class="col-md-12" style="margin-left: -70px;">
+                                                      <span class="btn-add-plus" (click)="addEveningItem()" ><i class="fa fa-plus"></i></span>                               
+                                                   </div>
+                                                </div>
+                                             </div>       -->
+                                             <ng-container formArrayName="Evening">
+                                                <div *ngFor="let Evening of GetFormArray('Evening'); let i=index" [formGroupName]="i" class="col-lg-12">
+                                                   <div class="row form-group">
+                                                      <div class="col-md-4">
+                                                         <div class="row">
+                                                            <!-- <label class="col-lg-5 col-md-9 col-form-label text-lg-right">Milk Type</label> -->
+                                                            <div class="col-md-12">
+                                                               <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                                  <mat-select formControlName="ProductId" placeholder="Select Milk Type">
+                                                                     <mat-option *ngFor="let Type_of_Milk of Type_of_MilkEvening; let i=index" [value]="Type_of_Milk.ProductId"> {{Type_of_Milk.Type}} </mat-option>
+                                                                  </mat-select>
+                                                                  <mat-error [innerHTML]="GetFormControlArrayErrorMessage('Evening', i, 'ProductId')"></mat-error>
+                                                            </mat-form-field>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                      <div class="col-md-4"> 
+                                                         <div class="row">
+                                                            <!-- <label class="col-lg-5 col-md-9 col-form-label text-lg-right">Liter</label> -->
+                                                            <div class="col-md-12">   
+                                                               <mat-form-field class="full-width" [floatLabel]="'never'" appearance="fill">
+                                                                     <mat-select formControlName="Liter" placeholder="Liter">
+                                                                        <mat-option *ngFor="let Liter of Liter; let i=index" [value]="Liter.Key"> {{Liter.Name}} </mat-option>
+                                                                     </mat-select>
+                                                                     <mat-error [innerHTML]="GetFormControlArrayErrorMessage('Evening', i, 'Liter')"></mat-error>
+                                                               </mat-form-field>
+                                                            </div>
+                                                         </div> 
+                                                      </div>                                                 
+                                                      <!-- <div class="col-md-1 spl-day-remove-button text-right" *ngIf="PageType === 'Create' || (PageType === 'Edit' && CustomerDetails.Register_From === 'Web')">
+                                                         <span  class="btn-remove-minus" (click)="removeEveningItem(i)"><i class="fa fa-minus"></i></span>
+                                                      </div> -->
+                                                   </div>
+                                                </div>
+                                             </ng-container> 
+                                       </div>
+                                    </ng-container>
+                                    </div>                                 
+                                 </div>
+
+                                 <div class="col-md-6 form-group" *ngIf="CustomerDetails?.SubscriptionPaused === true">
+                                    <h6 style=" color:#fc6700; text-align: center;"> The Customer has paused the Subscription. </h6>
+                                 </div>
+                              </div>
+                           </ng-container>
+                           <!-- Subscription Details end -->
+                        </div>
+                     </div>
+                     </div>
+                     
+                     <!-- Submit the Form -->
+                     <div class="row">
+                       <div class="col-sm-12">
+                           <button type="button" *ngIf="PageType === 'Create'" (click)="onSubmit()" class="btn btn-outline-success float-right save">
+                             <!-- <span class="btn-save-loader"><i class="fa fa-refresh fa-spin"></i></span>   -->
+                             Save 
+                           </button> 
+                           <!-- *ngIf="PageType === 'Edit'" -->
+                           <button type="button" *ngIf="PageType === 'Edit'" (click)="onUpdate()" class="btn btn-outline-success float-right save">Update</button>
+                       </div>
+                     </div>
+               </form>
+             </div>
+      </div>
+   </div>
+</section>
